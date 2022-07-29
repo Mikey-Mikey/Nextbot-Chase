@@ -24,7 +24,7 @@ local nextbots = {
 	"npc_quandaledingle",
 	"npc_smiler"
 }
-
+local contains = table.HasValue
 function spawnAsSpectator(ply,target)
 	print("Spawning " .. ply:Nick() .. " as spectator")
 	ply:SetPos(target:GetPos())
@@ -55,8 +55,6 @@ function RestartGame()
 	alive_people = player.GetAll()
 	PrintTable(alive_people)
 
-	
-
 	if SERVER then
 		timer.Simple(0, function()
 			for _, ply in ipairs(player.GetAll()) do
@@ -77,7 +75,6 @@ function RestartGame()
 			for _, ply in ipairs(player.GetAll()) do
 				ply:SetTeam(1)
 				ply:UnSpectate()
-				ply:SetNoCollideWithTeammates(true)
 				ply:Spawn()
 				ply:GodEnable()
 				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
@@ -142,7 +139,7 @@ function GM:PlayerDisconnected(ply)
 		has_people = false
 	end
 
-	if alive_people[ply] == nil then
+	if contains(alive_people,ply) then
 		table.RemoveByValue(alive_people, ply)
 	end
 
@@ -161,7 +158,7 @@ function GM:PlayerSpawn(ply)
 	ply:SetModel( "models/player/odessa.mdl" )
 
 	timer.Simple(0,function()
-		if alive_people[ply] ~= nil and #alive_people > 0 then
+		if not contains(alive_people,ply) and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
 		end
 	end)
@@ -177,7 +174,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if alive_people[ply] == nil and #alive_people > 1 then
+	if not contains(alive_people,ply) and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
 		while ply:GetObserverTarget() == randomPly do
@@ -189,7 +186,7 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if alive_people[victim] == nil and #alive_people >= 1 then
+	if contains(alive_people,ply) and #alive_people >= 1 then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
