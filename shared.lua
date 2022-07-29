@@ -179,7 +179,7 @@ function GM:PlayerSpawn(ply)
 	timer.Simple(0,function()
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			local randomPly = table.Random(alive_people)
-			while not randomPly:IsValid() do
+			while not randomPly:IsValid() or not contains(alive_people,randomPly) do
 				randomPly = table.Random(alive_people)
 			end
 			spawnAsSpectator(ply,randomPly)
@@ -212,10 +212,11 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 					for k,ply in ipairs(player.GetAll()) do
 						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
 							local randomPly = table.Random(alive_people)
-							while not randomPly:IsValid() do
-								ply:Spawn()
-								spawnAsSpectator(ply,randomPly)
+							while not randomPly:IsValid() or not contains(alive_people,randomPly) do
+								randomPly = table.Random(alive_people)
 							end
+							ply:Spawn()
+							spawnAsSpectator(ply,randomPly)
 						end
 					end
 				end
