@@ -74,6 +74,7 @@ function RestartGame()
 			local areas = navmesh.GetAllNavAreas()
 			for _, ply in ipairs(player.GetAll()) do
 				ply:SetTeam(1)
+				ply:SetNoCollideWithTeammates(true)
 				ply:UnSpectate()
 				ply:Spawn()
 				ply:GodEnable()
