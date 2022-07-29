@@ -44,7 +44,6 @@ end
 function spawnAsRoaming(ply)
 	local pos = ply:GetShootPos()
 	local ang = ply:EyeAngles()
-	
 	ply:SetPos(pos)
 	ply:SetEyeAngles(ang)
 	ply:Spectate(OBS_MODE_ROAMING)
