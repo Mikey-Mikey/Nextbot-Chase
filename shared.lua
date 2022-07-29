@@ -5,9 +5,7 @@ GM.Website = "N/A"
 
 -- Includes
 AddCSLuaFile("utils/chat.lua")
-AddCSLuaFile("utils/table.lua")
 include("utils/chat.lua")
-include("utils/table.lua")
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
@@ -29,10 +27,6 @@ local nextbots = {
 	"npc_quandaledingle",
 	"npc_smiler"
 }
-
-local function contains(list, value)
-	return list[value] ~= nil
-end
 
 function spawnAsSpectator(ply,target)
 	ply:SetPos(target:GetPos())
@@ -141,7 +135,7 @@ function GM:PlayerDisconnected(ply)
 		has_people = false
 	end
 
-	if contains(alive_people, ply) then
+	if alive_people[ply] ~= nil then
 		table.RemoveByValue(alive_people, ply)
 	end
 
@@ -160,7 +154,7 @@ function GM:PlayerSpawn(ply)
 	ply:SetModel( "models/player/odessa.mdl" )
 
 	timer.Simple(0,function()
-		if not contains(alive_people, ply) and #alive_people > 0 then
+		if not alive_people[ply] ~= nil and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
 		end
 	end)
@@ -176,7 +170,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if not contains(alive_people,ply) and #alive_people > 1 then
+	if not alive_people[ply] ~= nil and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
 		while ply:GetObserverTarget() == randomPly do
@@ -188,7 +182,7 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if contains(alive_people, victim) and #alive_people >= 1 then
+	if alive_people[victim] ~= nil and #alive_people >= 1 then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
