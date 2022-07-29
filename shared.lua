@@ -26,7 +26,6 @@ local nextbots = {
 }
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
-	ply:Spawn()
 	print("Spawning " .. ply:Nick() .. " as spectator")
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
