@@ -106,13 +106,13 @@ function RestartGame()
 				while not pos_found do
 					pos_found = true
 					for _, ply in ipairs(player.GetAll()) do
-						if ply:GetPos():Distance(pos) < 200 then
+						if ply:GetPos():Distance(pos) < 100 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
 							pos_found = false
 						end
 					end
 					sample = sample + 1
-					if sample > 1000 then break end
+					if sample > 100 then break end
 				end
 				local nextbot_class = nextbots[math.random(#nextbots)]
 				while contains(current_nextbots, nextbot_class) do
