@@ -29,6 +29,7 @@ local nextbots = {
 	"npc_smiler",
 	"npc_jungler"
 }
+local current_nextbots = {}
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
 	local ang = ply:EyeAngles()
@@ -109,12 +110,15 @@ function RestartGame()
 						end
 					end
 				end
-
-				local nextbot = ents.Create(nextbots[math.random(#nextbots)])
+				local nextbot_class = nextbots[math.random(#nextbots)]
+				while contains(current_nextbots, nextbot_class) do
+					nextbot_class = nextbots[math.random(#nextbots)]
+				end
+				local nextbot = ents.Create()
 
 				nextbot:SetPos(pos)
 				nextbot:Spawn()
-
+				current_nextbots[#current_nextbots + 1] = nextbot:GetClass()
 				print("Nextbot Spawned!")
 			end
 		end)
