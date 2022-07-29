@@ -61,6 +61,7 @@ function RestartGame()
 		alive_people = player.GetAll()
 	end)
 	if SERVER then
+		timer.Create("SpawnProtect",1.0,function() end)
 		timer.Simple(0, function()
 			for _, ply in ipairs(player.GetAll()) do
 				spawnAsRoaming(ply)
@@ -205,7 +206,7 @@ if SERVER then
 end
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if contains(alive_people,victim) then
+	if contains(alive_people,victim) and not timer.Exists("SpawnProtect") then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
