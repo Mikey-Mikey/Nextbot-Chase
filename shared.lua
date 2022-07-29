@@ -169,7 +169,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if alive_people[ply] == nil and #alive_people > 1 then
+	if alive_people[ply] ~= nil and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
 		while ply:GetObserverTarget() == randomPly do
