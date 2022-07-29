@@ -98,7 +98,6 @@ function RestartGame()
 
 			for i = 1,4 do -- spawn 4 nextbots
 				local pos_found = false
-				local areas = navmesh.GetAllNavAreas()
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
 				while not pos_found do
@@ -162,7 +161,7 @@ function GM:PlayerDisconnected(ply)
 	end
 
 	print(#alive_people)
-	
+
 	if #alive_people <= 0 and player.GetCount() > 0 then
 		RestartGame()
 	end
@@ -245,7 +244,7 @@ function GM:Tick()
 			end
 		end
 	end
-	
+
 	if #alive_people <= 0 and has_people then
 		RestartGame()
 	end
