@@ -114,7 +114,7 @@ function RestartGame()
 				while contains(current_nextbots, nextbot_class) do
 					nextbot_class = nextbots[math.random(#nextbots)]
 				end
-				local nextbot = ents.Create()
+				local nextbot = ents.Create(nextbot_class)
 
 				nextbot:SetPos(pos)
 				nextbot:Spawn()
