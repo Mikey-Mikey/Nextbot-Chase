@@ -152,8 +152,11 @@ function GM:PlayerDisconnected(ply)
 	end
 	for k,spec in ipairs(player.GetAll()) do
 		if spec:GetObserverMode() != OBS_MODE_NONE and ply == spec:GetObserverTarget() then
-			spec:Spawn()
-			spawnAsSpectator(spec,table.Random(alive_people))
+			local randomPly = table.Random(alive_people)
+			while not randomPly:IsValid() do
+				spec:Spawn()
+				spawnAsSpectator(spec,randomPly)
+			end
 		end
 	end
 	print(#alive_people)
@@ -173,7 +176,10 @@ function GM:PlayerSpawn(ply)
 	ply:SetModel( "models/player/odessa.mdl" )
 	timer.Simple(0,function()
 		if not contains(alive_people,ply) and #alive_people > 0 then
-			spawnAsSpectator(ply,table.Random(alive_people))
+			local randomPly = table.Random(alive_people)
+			while not randomPly:IsValid() do
+				spawnAsSpectator(ply,randomPly)
+			end
 		end
 	end)
 end
@@ -202,8 +208,11 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 					spawnAsSpectator(victim,table.Random(alive_people))
 					for k,ply in ipairs(player.GetAll()) do
 						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
-							ply:Spawn()
-							spawnAsSpectator(ply,table.Random(alive_people))
+							local randomPly = table.Random(alive_people)
+							while not randomPly:IsValid() do
+								ply:Spawn()
+								spawnAsSpectator(ply,randomPly)
+							end
 						end
 					end
 				end
