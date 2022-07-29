@@ -186,7 +186,7 @@ net.Receive("spectate_next", function(len,ply)
 	if not contains(alive_people,ply) and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
-		while ply:GetObserverTarget() == randomPly or ply:GetObserverTarget():GetObserverMode() != OBS_MODE_NONE do
+		while ply:GetObserverTarget() == randomPly do
 			randomPly = table.Random(alive_people)
 		end
 		ply:Spawn()
