@@ -180,7 +180,7 @@ end
 
 if CLIENT then
 	function GM:SetupMove(ply,mv,cmd)
-		if input.WasMousePressed(MOUSE_LEFT) and ply == LocalPlayer() and #alive_people > 1 then
+		if input.WasMousePressed(MOUSE_LEFT) and ply == LocalPlayer() and #alive_people > 1 and ply:Alive() then
 			net.Start("spectate_next")
 			net.SendToServer()
 		end
@@ -194,7 +194,6 @@ net.Receive("spectate_next", function(len,ply)
 			if ply:GetObserverTarget() != randomPly then break end
 			randomPly = table.Random(alive_people)
 		end
-		ply:Spawn()
 		spawnAsSpectator(ply,randomPly)
 	end
 end)
