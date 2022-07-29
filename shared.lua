@@ -180,7 +180,7 @@ net.Receive("spectate_next", function(len,ply)
 		while ply:GetObserverTarget() == randomPly do
 			randomPly = table.Random(alive_people)
 		end
-
+		ply:Spawn()
 		spawnAsSpectator(ply,randomPly)
 	end
 end)
