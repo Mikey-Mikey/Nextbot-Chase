@@ -158,13 +158,10 @@ function GM:PlayerDisconnected(ply)
 		RestartGame()
 	end
 end
-function GM:PlayerLoadout(ply)
-	ply:Give("parkourmod")
-	return true
-end
 
 function GM:PlayerSpawn(ply)
 	has_people = true
+	ply:Give("parkourmod")
 	ply:SetVelocity(-ply:GetVelocity())
 	ply:SetModel( "models/player/odessa.mdl" )
 
