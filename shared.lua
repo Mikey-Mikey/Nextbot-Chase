@@ -3,6 +3,11 @@ GM.Author = "Mikey"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
+-- Includes
+include("utils/chat.lua")
+include("utils/table.lua")
+
+-- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
 local has_people = has_people or false
@@ -23,16 +28,6 @@ local nextbots = {
 	"npc_quandaledingle",
 	"npc_smiler"
 }
-
-local function contains(list, value)
-	for k, v in pairs(list) do
-		if v == value then
-			return true
-		end
-	end
-
-	return false
-end
 
 function spawnAsSpectator(ply,target)
 	ply:SetPos(target:GetPos())
@@ -57,7 +52,7 @@ function spawnAsRoaming()
 end
 
 function reward(ply)
-	ply:ChatPrint(ply:GetName() .. " won this round!")
+	chatPrintFancy(ply:GetName() .. " won this round!")
 end
 
 function RestartGame()
