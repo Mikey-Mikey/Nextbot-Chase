@@ -188,7 +188,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if not contains(alive_people,ply) and #alive_people > 1 then
+	if not contains(alive_people,ply) then
 		local randomPly = table.Random(alive_people)
 		while #alive_people > 1 do
 			if ply:GetObserverTarget() != randomPly then break end
