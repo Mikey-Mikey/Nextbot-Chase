@@ -124,10 +124,6 @@ end
 RestartGame()
 
 function GM:InitPostEntity()
-	if SERVER then
-		navmesh.Load()
-	end
-
 	RestartGame()
 end
 
