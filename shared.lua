@@ -38,6 +38,7 @@ function spawnAsSpectator(ply,target)
 	ply:SpectateEntity(target)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
 	ply:SetEyeAngles(ang)
+	ply:StripWeapons()
 end
 
 
@@ -48,6 +49,7 @@ function spawnAsRoaming(ply)
 	ply:SetEyeAngles(ang)
 	ply:Spectate(OBS_MODE_ROAMING)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
+	ply:StripWeapons()
 end
 
 function reward(ply)
