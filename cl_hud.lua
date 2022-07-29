@@ -29,7 +29,7 @@ end)
 timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
 	for _, v in ipairs(player.GetAll()) do
-		if v:Alive() then
+		if v:GetObserverMode() == OBS_MODE_NONE then
 			ply_count = ply_count + 1
 		end
 	end
