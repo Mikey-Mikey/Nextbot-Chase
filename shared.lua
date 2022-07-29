@@ -5,7 +5,11 @@ GM.Website = "N/A"
 
 -- Global Variables
 local round = 1
-local alive_people = alive_people or player.GetAll()
+if alive_people == nil then
+	alive_people = player.GetAll()
+else
+	alive_people = alive_people
+end
 local has_people = has_people or false
 local nextbots = {
 	"npc_wenomachainsama",
