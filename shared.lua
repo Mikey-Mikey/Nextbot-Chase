@@ -56,7 +56,9 @@ function reward(ply)
 end
 
 function RestartGame()
-	alive_people = player.GetAll()
+	timer.Simple(4.0, function()
+		alive_people = player.GetAll()
+	end)
 	if SERVER then
 		timer.Simple(0, function()
 			for _, ply in ipairs(player.GetAll()) do
@@ -216,6 +218,9 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 			end)
 		end
 	end
+	if #alive_people <= 0 and has_people then
+		RestartGame()
+	end
 end
 
 function GM:Tick()
@@ -225,9 +230,5 @@ function GM:Tick()
 			net.WriteInt(timer.TimeLeft("chase_Restart"), 16)
 			net.Broadcast()
 		end)
-	end
-
-	if #alive_people <= 0 and has_people then
-		RestartGame()
 	end
 end
