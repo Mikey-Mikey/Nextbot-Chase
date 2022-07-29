@@ -10,3 +10,5 @@ include( "sv_restrictions.lua" )
 
 util.AddNetworkString("spectate_next")
 util.AddNetworkString("chase_time")
+
+navmesh.Load()
