@@ -142,7 +142,12 @@ function GM:PlayerDisconnected(ply)
 	if contains(alive_people,ply) then
 		table.RemoveByValue(alive_people, ply)
 	end
-
+	for k,spec in ipairs(player.GetAll()) do
+		if spec:GetObserverMode() != OBS_MODE_NONE and ply == spec:GetObserverTarget() then
+			spec:Spawn()
+			spawnAsSpectator(spec,table.Random(alive_people))
+		end
+	end
 	print(#alive_people)
 
 	if #alive_people <= 0 and player.GetCount() > 0 then
@@ -194,6 +199,12 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				if #alive_people >= 1 then
 					victim:Spawn()
 					spawnAsSpectator(victim,table.Random(alive_people))
+					for k,ply in ipairs(player.GetAll()) do
+						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() then
+							ply:Spawn()
+							spawnAsSpectator(ply,table.Random(alive_people))
+						end
+					end
 				end
 			end)
 		end
