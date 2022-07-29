@@ -133,20 +133,6 @@ function GM:InitPostEntity()
 	RestartGame()
 end
 
-local chase_time = 0
-
-net.Receive("chase_time", function()
-	chase_time = net.ReadInt(16)
-end)
-
-function GM:PostDrawHUD()
-	surface.SetDrawColor(200,200,200,200)
-	draw.RoundedBox(5, ScrW() / 2 - 150 / 2, -5, 150, 50, Color(0,0,0,200))
-
-	draw.DrawText(math.floor(chase_time / 60) .. ":" .. string.format("%02d",math.floor(chase_time % 60)), "CloseCaption_Bold", ScrW() / 2, 3, Color(225,225,225,255), TEXT_ALIGN_CENTER)
-	draw.SimpleText("Players Left: " .. #alive_people, "SmallText", ScrW() / 2 - 35, 26)
-end
-
 function GM:PlayerNoClip(ply, desiredState)
 	return false
 end
@@ -235,6 +221,7 @@ function GM:Tick()
 		end)
 	end
 
+	// TODO: Optimize this, it definitely does not need to be running every frame
 	if SERVER then
 		for k,v in ipairs(player.GetAll()) do
 			for _, wep in ipairs( v:GetWeapons() ) do
