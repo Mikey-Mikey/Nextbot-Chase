@@ -79,7 +79,7 @@ function RestartGame()
 				ply:UnSpectate()
 				ply:Spawn()
 				ply:GodEnable()
-				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,150)) --for some reason, this is needed to prevent the players from spawning in the same spot
+				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
 				timer.Simple(2.0, function()
 					if ply:IsValid() then
 						ply:GodDisable()
