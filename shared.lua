@@ -83,8 +83,7 @@ function RestartGame()
 				v:SetNoCollideWithTeammates(true)
 				v:Spawn()
 				v:GodEnable()
-				local pos = areas[math.random(#areas)]:GetRandomPoint()
-				v:SetPos(pos) --for some reason, this is needed to prevent the players from spawning in the same spot
+				v:SetPos(v:GetPos() + v:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
 				timer.Simple(2.0, function()
 					if v:IsValid() then
 						v:GodDisable()
@@ -221,7 +220,7 @@ function GM:Tick()
 		end)
 	end
 
-	// TODO: Optimize this, it definitely does not need to be running every frame
+	-- TODO: Optimize this, it definitely does not need to be running every frame
 	if SERVER then
 		for k,v in ipairs(player.GetAll()) do
 			for _, wep in ipairs( v:GetWeapons() ) do
