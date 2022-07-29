@@ -1,47 +1,57 @@
-local PlayerMeta = FindMetaTable("Player")
+-- weapons to give the player when they spawn
+local playerWeapons = {
+    "parkourmod"
+}
 
-function PlayerMeta:spawnAsSpectator(target)
-    ply:Spawn()
+-- run when the player spawns
+function GM:PlayerSpawn(ply) 
+    -- check if the player is a spectator
+    if ply.spectating then return end
 
-    if not IsValid(target) then 
-        self:Spectate(OBS_MODE_ROAMING)
-    else
-        self:Spectate(OBS_MODE_CHASE)
-        self:SpectateEntity(target)
-        self:SetPos(target:GetPos())
+    -- set the player's model
+    ply:SetModel( "models/player/odessa.mdl" )
+
+    -- remove the player's velocity (kept across spawns for some reason)
+    ply:SetVelocity(-ply:GetVelocity())
+
+    -- actually give the player the weapons in the table
+    for _,ply in pairs(playerWeapons) do
+        ply:Give(v)
     end
 end
 
-function GM:PostPlayerDeath( ply )
-    table.RemoveByValue(self.Players, ply)
-    ply:spawnAsSpectator(self.Players[math.random(1, #self.Players)])
-end
-
+-- run when the server is a
 hook.Add("preRoundStart", "players", function(round)
+    -- clear the global alive players table on round start
     GAMEMODE.players = {}
 
+    -- for every player on the server do the following 
     for _,ply in pairs(player.GetAll()) do
+        ply:UnSpectate()
+        ply:SetTeam(1)
+		ply:SetNoCollideWithTeammates(true)
+        ply:Spawn()
         ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+        ply:GodEnable()
+
+        -- add the player to the global alive players table
         GAMEMODE.players[#GAMEMODE.players + 1] = ply
     end
 end)
 
+-- when the round starts after 3 seconds disable spawn protection 
 hook.Add("RoundStart", "players", function(round)
     for _,ply in pairs(player.GetAll()) do
         timer.Simple(3, function()
-			if ply:IsValid() then ply:GodDisable() end
+			if ply:IsValid() then 
+                ply:GodDisable() 
+                ply:SetNoCollideWithTeammates(false)
+            end
 		end)
     end
 end)
 
-hook.Add("RoundEnd", "players", function(round)
-    for _,ply in pairs(player.GetAll()) do
-        ply:killsilent()
-        ply:spawnAsSpectator()
-    end
-end)
-
--- player restrictions
+-- if players are not superadmin then they are not allowed to do the following
 hook.Add( "CanPlayerSuicide", "AllowSuicide", function( ply )
 	if ply:IsSuperAdmin() then return true end
 

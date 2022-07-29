@@ -1,5 +1,7 @@
+-- table of bots activly in the game and running around the server killing people
 local activeBots = {}
 
+-- table of bots that are able to be spawned
 local nextbots = {
 	"npc_wenomachainsama",
 	"npc_gigachad",
@@ -18,6 +20,7 @@ local nextbots = {
 	"npc_smiler"
 }
 
+-- spawn bots at a random location
 local function spawnBots(amount)
     if amount == nil then amount = 2 end
     
