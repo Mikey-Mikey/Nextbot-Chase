@@ -30,6 +30,10 @@ local nextbots = {
 	"npc_smiler"
 }
 
+local function contains(list, value)
+	return list[value] ~= nil
+end
+
 function spawnAsSpectator(ply,target)
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
