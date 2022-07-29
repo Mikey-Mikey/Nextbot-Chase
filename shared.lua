@@ -201,7 +201,6 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end)
 		end
-
 		print(#alive_people)
 	end
 end
