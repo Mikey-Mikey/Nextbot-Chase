@@ -61,7 +61,7 @@ function RestartGame()
 		alive_people = player.GetAll()
 	end)
 	if SERVER then
-		timer.Create("SpawnProtect",1.0,function() end)
+		timer.Create("SpawnProtect", 1.0, 1, function() end)
 		timer.Simple(0, function()
 			for _, ply in ipairs(player.GetAll()) do
 				spawnAsRoaming(ply)
