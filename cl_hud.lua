@@ -16,8 +16,8 @@ surface.CreateFont( "SmallText", {
 
 // Custom HUD
 
-local chase_time = 0
-local ply_count = 0
+local chase_time = 0 or chase_time
+local ply_count = 0 or ply_count
 
 // update chase time
 // TODO: make this a clientside countdown instead of networking the time to clients every second
