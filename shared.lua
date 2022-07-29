@@ -186,7 +186,7 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if contains(alive_people,ply) then
+	if contains(alive_people,victim) then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
