@@ -4,6 +4,7 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 -- Includes
+AddCSLuaFile("utils/chat.lua")
 include("utils/chat.lua")
 include("utils/table.lua")
 
@@ -22,7 +23,6 @@ HUD_TIMER_HEIGHT = 50
 HUD_TIMER_RADIUS = 5
 HUD_TIMER_TEXT_OFFSET = 3
 HUD_TIMER_PLAYER_LEFT_OFFSET = 26
-
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
@@ -88,7 +88,6 @@ function RestartGame()
 				end
 				RestartGame()
 			end)
-
 			for i, ply in ipairs(player.GetAll()) do
 				ply:SetTeam(1)
 				ply:UnSpectate()
@@ -97,6 +96,7 @@ function RestartGame()
 				ply:GodEnable()
 				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(100)) --for some reason, this is needed to prevent the players from spawning in the same spot
 				-- TODO: Spawn in random navmesh point.
+
 				timer.Simple(2.0, function()
 					if ply:IsValid() then
 						ply:GodDisable()
@@ -110,7 +110,6 @@ function RestartGame()
 
 			for i = 1, NEXTBOT_COUNT do -- spawn NEXTBOT_COUNT nextbots
 				local pos_found = false
-				local areas = navmesh.GetAllNavAreas()
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
 				while not pos_found do
@@ -169,12 +168,12 @@ function GM:PlayerDisconnected(ply)
 		has_people = false
 	end
 
-	if contains(alive_people, ply) then
+	if alive_people[ply] ~= nil then
 		table.RemoveByValue(alive_people, ply)
 	end
 
 	print(#alive_people)
-	
+
 	if #alive_people <= 0 and player.GetCount() > 0 then
 		RestartGame()
 	end
@@ -188,7 +187,7 @@ function GM:PlayerSpawn(ply)
 	ply:SetModel( "models/player/odessa.mdl" )
 
 	timer.Simple(0,function()
-		if not contains(alive_people, ply) and #alive_people > 0 then
+		if not alive_people[ply] ~= nil and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
 		end
 	end)
@@ -204,7 +203,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if not contains(alive_people,ply) and #alive_people > 1 then
+	if not alive_people[ply] ~= nil and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
 		while ply:GetObserverTarget() == randomPly do
@@ -216,7 +215,7 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if contains(alive_people, victim) and #alive_people >= 1 then
+	if alive_people[victim] ~= nil and #alive_people >= 1 then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
@@ -248,6 +247,7 @@ function GM:Tick()
 		end)
 	end
 
+	-- TODO: Optimize this, it definitely does not need to be running every frame
 	if SERVER then
 		for i, ply in ipairs(player.GetAll()) do
 			for _, wep in ipairs( ply:GetWeapons() ) do
@@ -257,7 +257,7 @@ function GM:Tick()
 			end
 		end
 	end
-	
+
 	if #alive_people <= 0 and has_people then
 		RestartGame()
 	end
