@@ -119,6 +119,14 @@ function RestartGame()
 	round = round + 1
 end
 
+if SERVER then
+	timer.Create("chase_send_player_count", 1, 0, function()
+		net.Start("chase_player_count")
+			net.WriteInt(#player.GetAll(), 8)
+		net.Broadcast()
+	end)
+end
+
 RestartGame()
 
 function GM:InitPostEntity()

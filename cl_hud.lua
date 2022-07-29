@@ -25,14 +25,8 @@ net.Receive("chase_time", function()
 	chase_time = net.ReadInt(16)
 end)
 
-// update alive player count, runs once a second so its a pretty low calculation
-timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
-	ply_count = 0
-	for _, ply in ipairs(player.GetAll()) do
-		if ply:GetObserverMode() == OBS_MODE_NONE then
-			ply_count = ply_count + 1
-		end
-	end
+net.Receive("chase_player_count", function()
+	ply_count = net.ReadInt(8)
 end)
 
 // optimizations
