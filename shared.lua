@@ -126,8 +126,9 @@ if SERVER then
 		net.Broadcast()
 	end)
 end
-
-RestartGame()
+if #alive_people <= 0 then
+	RestartGame()
+end
 
 function GM:InitPostEntity()
 	RestartGame()
