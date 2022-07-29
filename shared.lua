@@ -36,18 +36,16 @@ function spawnAsSpectator(ply,target)
 	ply:StripWeapons()
 end
 
-function spawnAsRoaming()
-	for k,v in ipairs(player.GetAll()) do
-		local pos = v:GetShootPos()
-		local ang = v:EyeAngles()
+function spawnAsRoaming(ply)
+	local pos = ply:GetShootPos()
+	local ang = ply:EyeAngles()
 
-		v:Spawn()
-		v:SetPos(pos)
-		v:SetEyeAngles(ang)
-		v:Spectate(OBS_MODE_ROAMING)
-		v:SetMoveType(MOVETYPE_OBSERVER)
-		v:StripWeapons()
-	end
+	ply:Spawn()
+	ply:SetPos(pos)
+	ply:SetEyeAngles(ang)
+	ply:Spectate(OBS_MODE_ROAMING)
+	ply:SetMoveType(MOVETYPE_OBSERVER)
+	ply:StripWeapons()
 end
 
 function reward(ply)
@@ -58,35 +56,37 @@ function RestartGame()
 	alive_people = player.GetAll()
 	if SERVER then
 		timer.Simple(0, function()
-			spawnAsRoaming()
+			for _, ply in ipairs(player.GetAll()) do
+				spawnAsRoaming(ply)
+			end
 		end)
 
 		timer.Simple(4.0, function()
 			print("RESTART TIMER CREATED")
 
 			timer.Create("chase_Restart", 60 * 7, 1, function()
-				for k,v in ipairs(alive_people) do
-					reward(v)
+				for _, ply in ipairs(player.GetAll()) do
+					reward(ply)
 				end
 				RestartGame()
 			end)
 			local areas = navmesh.GetAllNavAreas()
-			for k, v in ipairs(player.GetAll()) do
-				v:SetTeam(1)
-				v:UnSpectate()
-				v:SetNoCollideWithTeammates(true)
-				v:Spawn()
-				v:GodEnable()
-				v:SetPos(v:GetPos() + v:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+			for _, ply in ipairs(player.GetAll()) do
+				ply:SetTeam(1)
+				ply:UnSpectate()
+				ply:SetNoCollideWithTeammates(true)
+				ply:Spawn()
+				ply:GodEnable()
+				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
 				timer.Simple(2.0, function()
-					if v:IsValid() then
-						v:GodDisable()
+					if ply:IsValid() then
+						ply:GodDisable()
 					end
 				end)
 			end
 
-			for k,v in ipairs(ents.FindByClass("npc_*")) do
-				v:Remove()
+			for _, npc in ipairs(ents.FindByClass("npc_*")) do
+				npc:Remove()
 			end
 
 			for i = 1,4 do -- spawn 4 nextbots
@@ -95,8 +95,8 @@ function RestartGame()
 
 				while not pos_found do
 					pos_found = true
-					for k,v in ipairs(player.GetAll()) do
-						if v:GetPos():Distance(pos) < 100 then
+					for _, ply in ipairs(player.GetAll()) do
+						if ply:GetPos():Distance(pos) < 100 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
 							pos_found = false
 						end
@@ -193,10 +193,10 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end)
 
-			for k,v in ipairs(player.GetAll()) do
-				if v:GetObserverTarget() == victim then
-					v:Spawn()
-					spawnAsSpectator(v,table.Random(alive_people))
+			for _, ply in ipairs(player.GetAll()) do
+				if ply:GetObserverTarget() == victim then
+					ply:Spawn()
+					spawnAsSpectator(ply,table.Random(alive_people))
 				end
 			end
 		end
@@ -216,10 +216,10 @@ function GM:Tick()
 
 	-- TODO: Optimize this, it definitely does not need to be running every frame
 	if SERVER then
-		for k,v in ipairs(player.GetAll()) do
+		for _, ply in ipairs(player.GetAll()) do
 			for _, wep in ipairs( v:GetWeapons() ) do
 				if wep:GetClass() ~= "parkourmod" then
-					v:StripWeapon( wep:GetClass() )
+					ply:StripWeapon( wep:GetClass() )
 				end
 			end
 		end
