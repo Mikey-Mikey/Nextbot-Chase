@@ -159,15 +159,14 @@ function GM:PlayerDisconnected(ply)
 	end
 end
 function GM:PlayerLoadout(ply)
-	if ply:GetObserverMode() == OBS_MODE_NONE then
-		ply:Give("parkourmod")
-	end
 	return true
 end
 
 function GM:PlayerSpawn(ply)
 	has_people = true
-
+	if ply:GetObserverMode() == OBS_MODE_NONE then
+		ply:Give("parkourmod")
+	end
 	ply:SetVelocity(-ply:GetVelocity())
 	ply:SetModel( "models/player/odessa.mdl" )
 
