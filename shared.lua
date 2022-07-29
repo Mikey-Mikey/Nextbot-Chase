@@ -56,8 +56,6 @@ function reward(ply)
 end
 
 function RestartGame()
-	alive_people = player.GetAll()
-	PrintTable(alive_people)
 
 	if SERVER then
 		timer.Simple(0, function()
@@ -67,6 +65,7 @@ function RestartGame()
 		end)
 
 		timer.Simple(4.0, function()
+			alive_people = player.GetAll()
 			print("RESTART TIMER CREATED")
 
 			timer.Create("chase_Restart", 60 * 5, 1, function()
