@@ -1,11 +1,10 @@
 GM.Name = "Nextbot Chase"
-GM.Author = "Mikey"
+GM.Author = "Mikey! with help from Mee, Marshall_vak, and MyUsername"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
--- Includes
-AddCSLuaFile("utils/chat.lua")
 include("utils/chat.lua")
+
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
@@ -29,6 +28,7 @@ local nextbots = {
 }
 
 function spawnAsSpectator(ply,target)
+	print("Spawning " .. ply:Nick() .. " as spectator")
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
 	ply:SpectateEntity(target)
@@ -37,6 +37,7 @@ function spawnAsSpectator(ply,target)
 end
 
 function spawnAsRoaming()
+	print("Spawning as roaming")
 	for k,v in ipairs(player.GetAll()) do
 		local pos = v:GetShootPos()
 		local ang = v:EyeAngles()
@@ -56,6 +57,10 @@ end
 
 function RestartGame()
 	alive_people = player.GetAll()
+	PrintTable(alive_people)
+
+	
+
 	if SERVER then
 		timer.Simple(0, function()
 			spawnAsRoaming()
@@ -135,7 +140,7 @@ function GM:PlayerDisconnected(ply)
 		has_people = false
 	end
 
-	if alive_people[ply] ~= nil then
+	if alive_people[ply] == nil then
 		table.RemoveByValue(alive_people, ply)
 	end
 
@@ -154,7 +159,7 @@ function GM:PlayerSpawn(ply)
 	ply:SetModel( "models/player/odessa.mdl" )
 
 	timer.Simple(0,function()
-		if not alive_people[ply] ~= nil and #alive_people > 0 then
+		if alive_people[ply] ~= nil and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
 		end
 	end)
@@ -170,7 +175,7 @@ if CLIENT then
 end
 
 net.Receive("spectate_next", function(len,ply)
-	if not alive_people[ply] ~= nil and #alive_people > 1 then
+	if alive_people[ply] ~= nil and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
 
 		while ply:GetObserverTarget() == randomPly do
@@ -182,7 +187,7 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if alive_people[victim] ~= nil and #alive_people >= 1 then
+	if alive_people[victim] == nil and #alive_people >= 1 then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
