@@ -22,7 +22,8 @@ local nextbots = {
 	"npc_cheemsburger",
 	"npc_selenedelgado",
 	"npc_quandaledingle",
-	"npc_smiler"
+	"npc_smiler",
+	"npc_jungler"
 }
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
