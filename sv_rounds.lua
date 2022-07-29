@@ -1,11 +1,8 @@
-local players = {}
-local spectators = {}
-local round = 0
-
 local preRoundTime = 1
 local roundTime = 420
 local afterRoundTime = 1
 
+local round = 0
 local roundState = 2
 
 local Color = Color
@@ -61,5 +58,5 @@ local function endRound()
 end
 
 local function endRoundCheck()
-    if not #players then endRound() end
+    if not #GAMEMODE.players and roundState == 1 then endRound() end
 end
