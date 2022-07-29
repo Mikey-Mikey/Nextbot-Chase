@@ -33,7 +33,7 @@ local draw_RoundedBox = draw.RoundedBox
 local surface_SetDrawColor = surface.SetDrawColor
 local draw_DrawText = draw.DrawText
 
-hook.Add("HUDPaint", "", function()
+hook.Add("HUDPaint", "mikey_customhud", function()
 	surface_SetDrawColor(200, 200, 200, 200)
 	draw_RoundedBox(5, ScrW() / 2 - 150 / 2, -5, 150, 50, Color(0, 0, 0, 200))
 
