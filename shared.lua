@@ -26,6 +26,7 @@ local nextbots = {
 }
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
+	ply:Spawn()
 	print("Spawning " .. ply:Nick() .. " as spectator")
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
@@ -186,23 +187,19 @@ net.Receive("spectate_next", function(len,ply)
 end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
-	if contains(alive_people,ply) and #alive_people >= 1 then
+	if contains(alive_people,ply) then
 		table.RemoveByValue(alive_people, victim)
 
 		if #alive_people >= 1 then
 			timer.Simple(2.0, function()
 				if #alive_people >= 1 then
-					victim:Spawn()
-					spawnAsSpectator(victim,table.Random(alive_people))
+
+					for _, ply in ipairs(player.GetAll()) do
+						spawnAsSpectator(ply,table.Random(alive_people))
+					end
+
 				end
 			end)
-
-			for _, ply in ipairs(player.GetAll()) do
-				if ply:GetObserverTarget() == victim then
-					ply:Spawn()
-					spawnAsSpectator(ply,table.Random(alive_people))
-				end
-			end
 		end
 
 		print(#alive_people)
