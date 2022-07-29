@@ -2,6 +2,7 @@ GM.Name = "Nextbot Chase"
 GM.Author = "Mikey"
 GM.Email = "N/A"
 GM.Website = "N/A"
+
 local round = 1
 local alive_people = alive_people or player.GetAll()
 local has_people = has_people or false
@@ -22,25 +23,17 @@ local nextbots = {
 	"npc_quandaledingle",
 	"npc_smiler"
 }
-if SERVER then
-	util.AddNetworkString("spectate_next")
-	util.AddNetworkString("chase_time")
-else
-	surface.CreateFont( "SmallText", {
-		font = "CloseCaption_Bold",
-		extended = false,
-		size = 13,
-		antialias = true
-	} )
-end
+
 local function contains(list, value)
 	for k, v in pairs(list) do
 		if v == value then
 			return true
 		end
 	end
+
 	return false
 end
+
 function spawnAsSpectator(ply,target)
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
@@ -48,10 +41,12 @@ function spawnAsSpectator(ply,target)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
 	ply:StripWeapons()
 end
+
 function spawnAsRoaming()
 	for k,v in ipairs(player.GetAll()) do
 		local pos = v:GetShootPos()
 		local ang = v:EyeAngles()
+
 		v:Spawn()
 		v:SetPos(pos)
 		v:SetEyeAngles(ang)
@@ -60,23 +55,28 @@ function spawnAsRoaming()
 		v:StripWeapons()
 	end
 end
+
 function reward(ply)
 	ply:ChatPrint(ply:GetName() .. " won this round!")
 end
+
 function RestartGame()
 	alive_people = player.GetAll()
 	if SERVER then
 		timer.Simple(0, function()
 			spawnAsRoaming()
 		end)
+
 		timer.Simple(4.0, function()
 			print("RESTART TIMER CREATED")
+
 			timer.Create("chase_Restart", 60 * 7, 1, function()
 				for k,v in ipairs(alive_people) do
 					reward(v)
 				end
 				RestartGame()
 			end)
+
 			for k, v in ipairs(player.GetAll()) do
 				v:SetTeam(1)
 				v:UnSpectate()
@@ -94,11 +94,13 @@ function RestartGame()
 			for k,v in ipairs(ents.FindByClass("npc_*")) do
 				v:Remove()
 			end
+
 			for i = 1,4 do -- spawn 4 nextbots
 				local pos_found = false
 				local areas = navmesh.GetAllNavAreas()
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
-				while !pos_found do
+
+				while not pos_found do
 					pos_found = true
 					for k,v in ipairs(player.GetAll()) do
 						if v:GetPos():Distance(pos) < 100 then
@@ -107,26 +109,36 @@ function RestartGame()
 						end
 					end
 				end
+
 				local nextbot = ents.Create(nextbots[math.random(#nextbots)])
+
 				nextbot:SetPos(pos)
 				nextbot:Spawn()
+
 				print("Nextbot Spawned!")
 			end
 		end)
 	end
+
 	round = round + 1
 end
+
 RestartGame()
+
 function GM:InitPostEntity()
 	if SERVER then
 		navmesh.Load()
 	end
+
 	RestartGame()
 end
+
 local chase_time = 0
+
 net.Receive("chase_time", function()
 	chase_time = net.ReadInt(16)
 end)
+
 function GM:PostDrawHUD()
 	surface.SetDrawColor(200,200,200,200)
 	draw.RoundedBox(5, ScrW() / 2 - 150 / 2, -5, 150, 50, Color(0,0,0,200))
@@ -143,10 +155,13 @@ function GM:PlayerDisconnected(ply)
 	if player.GetCount() == 0 then
 		has_people = false
 	end
+
 	if contains(alive_people, ply) then
 		table.RemoveByValue(alive_people, ply)
 	end
+
 	print(#alive_people)
+	
 	if #alive_people <= 0 and player.GetCount() > 0 then
 		RestartGame()
 	end
@@ -154,15 +169,18 @@ end
 
 function GM:PlayerSpawn(ply)
 	has_people = true
+
 	ply:SetVelocity(-ply:GetVelocity())
 	ply:Give("parkourmod")
 	ply:SetModel( "models/player/odessa.mdl" )
+
 	timer.Simple(0,function()
-		if !contains(alive_people, ply) and #alive_people > 0 then
+		if not contains(alive_people, ply) and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
 		end
 	end)
 end
+
 if CLIENT then
 	function GM:SetupMove(ply,mv,cmd)
 		if input.WasMousePressed(MOUSE_LEFT) and #alive_people > 1 then
@@ -171,34 +189,23 @@ if CLIENT then
 		end
 	end
 end
+
 net.Receive("spectate_next", function(len,ply)
-	if !contains(alive_people,ply) and #alive_people > 1 then
+	if not contains(alive_people,ply) and #alive_people > 1 then
 		local randomPly = table.Random(alive_people)
+
 		while ply:GetObserverTarget() == randomPly do
 			randomPly = table.Random(alive_people)
 		end
+
 		spawnAsSpectator(ply,randomPly)
 	end
 end)
-hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply)
-	return false
-end )
-
-hook.Add( "PlayerSpawnVehicle", "SpawnBlockVehicle", function(ply)
-	return false
-end )
-
-hook.Add( "PlayerSpawnProp", "SpawnBlockProp", function(ply)
-	return false
-end )
-
-hook.Add( "PlayerSpawnSENT", "SpawnBlockSENT", function(ply)
-	return false
-end )
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
 	if contains(alive_people, victim) and #alive_people >= 1 then
 		table.RemoveByValue(alive_people, victim)
+
 		if #alive_people >= 1 then
 			timer.Simple(2.0, function()
 				if #alive_people >= 1 then
@@ -206,6 +213,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 					spawnAsSpectator(victim,table.Random(alive_people))
 				end
 			end)
+
 			for k,v in ipairs(player.GetAll()) do
 				if v:GetObserverTarget() == victim then
 					v:Spawn()
@@ -213,27 +221,30 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end
 		end
+
 		print(#alive_people)
 	end
 end
 
 function GM:Tick()
-	if SERVER and !timer.Exists("chase_sync") and timer.Exists("chase_Restart") then
+	if SERVER and not timer.Exists("chase_sync") and timer.Exists("chase_Restart") then
 		timer.Create("chase_sync",1,0,function()
 			net.Start("chase_time")
 			net.WriteInt(timer.TimeLeft("chase_Restart"), 16)
 			net.Broadcast()
 		end)
 	end
+
 	if SERVER then
 		for k,v in ipairs(player.GetAll()) do
 			for _, wep in ipairs( v:GetWeapons() ) do
-				if wep:GetClass() != "parkourmod" then
+				if wep:GetClass() ~= "parkourmod" then
 					v:StripWeapon( wep:GetClass() )
 				end
 			end
 		end
 	end
+	
 	if #alive_people <= 0 and has_people then
 		RestartGame()
 	end
