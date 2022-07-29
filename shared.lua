@@ -32,10 +32,12 @@ local nextbots = {
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
 	print("Spawning " .. ply:Nick() .. " as spectator")
+	local ang = ply:EyeAngles()
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
 	ply:SpectateEntity(target)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
+	ply:SetEyeAngles(ang)
 end
 
 
