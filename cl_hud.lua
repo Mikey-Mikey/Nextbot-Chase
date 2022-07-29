@@ -13,7 +13,12 @@ surface.CreateFont( "SmallText", {
 	size = FONT_SIZE,
 	antialias = true
 })
-
+surface.CreateFont( "TimerText", {
+	font = "CloseCaption_Bold",
+	extended = false,
+	size = 24,
+	antialias = true
+})
 // Custom HUD
 
 local chase_time = 0 or chase_time
@@ -42,6 +47,6 @@ hook.Add("HUDPaint", "mikey_customhud", function()
 	local seconds = math.floor(chase_time % 60)
 	local formatted_seconds = string.format("%02d", seconds)		// formats the string so it always has 2 digits, such as 09 instead of 9
 
-	draw_DrawText(minutes .. ":" .. formatted_seconds, "CloseCaption_Bold", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
+	draw_DrawText(minutes .. ":" .. formatted_seconds, "TimerText", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
 	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.030, TEXT_COLOR, TEXT_ALIGN_CENTER)
 end)
