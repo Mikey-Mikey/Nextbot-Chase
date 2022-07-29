@@ -31,7 +31,6 @@ function spawnAsSpectator(ply,target)
 	ply:Spectate(OBS_MODE_CHASE)
 	ply:SpectateEntity(target)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
-	ply:StripWeapons()
 end
 
 
@@ -44,7 +43,6 @@ function spawnAsRoaming(ply)
 	ply:SetEyeAngles(ang)
 	ply:Spectate(OBS_MODE_ROAMING)
 	ply:SetMoveType(MOVETYPE_OBSERVER)
-	ply:StripWeapons()
 end
 
 function reward(ply)
@@ -159,9 +157,14 @@ function GM:PlayerDisconnected(ply)
 	end
 end
 
+function GM:PlayerLoadout(ply)
+	if ply:GetObserverMode() == OBS_MODE_NONE then
+		ply:Give("parkourmod")
+	end
+end
+
 function GM:PlayerSpawn(ply)
 	has_people = true
-	ply:Give("parkourmod")
 	ply:SetVelocity(-ply:GetVelocity())
 	ply:SetModel( "models/player/odessa.mdl" )
 
@@ -222,17 +225,6 @@ function GM:Tick()
 			net.WriteInt(timer.TimeLeft("chase_Restart"), 16)
 			net.Broadcast()
 		end)
-	end
-
-	-- TODO: Optimize this, it definitely does not need to be running every frame
-	if SERVER then
-		for _, ply in ipairs(player.GetAll()) do
-			for _, wep in ipairs( ply:GetWeapons() ) do
-				if wep:GetClass() != "parkourmod" then
-					ply:StripWeapon( wep:GetClass() )
-				end
-			end
-		end
 	end
 
 	if #alive_people <= 0 and has_people then
