@@ -3,6 +3,9 @@ function GM:PlayerNoClip(ply, desiredState)
 end
 
 hook.Add( "PlayerCanHearPlayersVoice", "Maximum Range", function( listener, talker )
+	if talker:GetObserverMode() == OBS_MODE_NONE and listener:GetObserverMode() != OBS_MODE_NONE then
+		return true
+	end
 	if talker:GetObserverMode() != OBS_MODE_NONE and listener:GetObserverMode() != OBS_MODE_NONE then
 		return true
 	end
@@ -10,9 +13,6 @@ hook.Add( "PlayerCanHearPlayersVoice", "Maximum Range", function( listener, talk
 		return true
 	end
 	if talker:GetObserverMode() != OBS_MODE_NONE and listener:GetObserverMode() == OBS_MODE_NONE then
-		return false
-	end
-	if talker:GetObserverMode() == OBS_MODE_NONE and listener:GetObserverMode() != OBS_MODE_NONE then
 		return false
 	end
 end )
