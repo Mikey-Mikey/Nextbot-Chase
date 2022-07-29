@@ -178,25 +178,18 @@ function GM:PlayerSpawn(ply)
 	end)
 end
 
-if CLIENT then
+if SERVER then
 	function GM:SetupMove(ply,mv,cmd)
-		if input.WasMousePressed(MOUSE_LEFT) and ply == LocalPlayer() and #alive_people > 1 and ply:Alive() then
-			net.Start("spectate_next")
-			net.SendToServer()
+		if not contains(alive_people,ply) and ply:KeyPressed( IN_ATTACK ) and #alive_people > 1 and ply:Alive() then
+			local randomPly = table.Random(alive_people)
+			while #alive_people > 1 do
+				if ply:GetObserverTarget() != randomPly then break end
+				randomPly = table.Random(alive_people)
+			end
+			spawnAsSpectator(ply,randomPly)
 		end
 	end
 end
-
-net.Receive("spectate_next", function(len,ply)
-	if not contains(alive_people,ply) then
-		local randomPly = table.Random(alive_people)
-		while #alive_people > 1 do
-			if ply:GetObserverTarget() != randomPly then break end
-			randomPly = table.Random(alive_people)
-		end
-		spawnAsSpectator(ply,randomPly)
-	end
-end)
 
 function GM:PostPlayerDeath(victim, inflictor, attacker)
 	if contains(alive_people,victim) then
