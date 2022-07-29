@@ -157,18 +157,13 @@ function GM:PlayerDisconnected(ply)
 	end
 end
 
-function GM:PlayerLoadout(ply)
-	if ply:GetObserverMode() == OBS_MODE_NONE then
-		ply:Give("parkourmod")
-	end
-	return true
-end
-
 function GM:PlayerSpawn(ply)
 	has_people = true
 	ply:SetVelocity(-ply:GetVelocity())
 	ply:SetModel( "models/player/odessa.mdl" )
-
+	if ply:GetObserverMode() == OBS_MODE_NONE then
+		ply:Give("parkourmod")
+	end
 	timer.Simple(0,function()
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			spawnAsSpectator(ply,table.Random(alive_people))
