@@ -192,12 +192,8 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 		if #alive_people >= 1 then
 			timer.Simple(2.0, function()
 				if #alive_people >= 1 then
-
-					for _, ply in ipairs(player.GetAll()) do
-						ply:Spawn()
-						spawnAsSpectator(ply,table.Random(alive_people))
-					end
-
+					victim:Spawn()
+					spawnAsSpectator(victim,table.Random(alive_people))
 				end
 			end)
 		end
