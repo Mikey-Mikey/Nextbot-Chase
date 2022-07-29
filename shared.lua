@@ -61,7 +61,6 @@ function RestartGame()
 		alive_people = player.GetAll()
 	end)
 	if SERVER then
-		timer.Create("SpawnProtect", 1.0, 1, function() end)
 		timer.Simple(0, function()
 			for _, ply in ipairs(player.GetAll()) do
 				spawnAsRoaming(ply)
@@ -69,6 +68,7 @@ function RestartGame()
 		end)
 
 		timer.Simple(4.0, function()
+			timer.Create("SpawnProtect", 1.0, 1, function() end)
 			print("RESTART TIMER CREATED")
 
 			timer.Create("chase_Restart", 60 * 5, 1, function()
