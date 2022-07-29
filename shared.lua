@@ -194,6 +194,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				if #alive_people >= 1 then
 
 					for _, ply in ipairs(player.GetAll()) do
+						ply:Spawn()
 						spawnAsSpectator(ply,table.Random(alive_people))
 					end
 
