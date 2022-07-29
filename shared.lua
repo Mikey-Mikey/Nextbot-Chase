@@ -31,7 +31,6 @@ local nextbots = {
 }
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
-	ply:UnSpectate()
 	local ang = ply:EyeAngles()
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
@@ -42,7 +41,6 @@ end
 
 
 function spawnAsRoaming(ply)
-	ply:UnSpectate()
 	local pos = ply:GetShootPos()
 	local ang = ply:EyeAngles()
 
