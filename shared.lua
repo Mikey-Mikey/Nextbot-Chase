@@ -161,6 +161,7 @@ function GM:PlayerLoadout(ply)
 	if ply:GetObserverMode() == OBS_MODE_NONE then
 		ply:Give("parkourmod")
 	end
+	return true
 end
 
 function GM:PlayerSpawn(ply)
