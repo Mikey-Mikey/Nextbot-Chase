@@ -10,6 +10,7 @@ include( "sv_restrictions.lua" )
 
 util.AddNetworkString("spectate_next")
 util.AddNetworkString("chase_time")
+util.AddNetworkString("chase_player_count")
 
 function GM:InitPostEntity()
 	navmesh.Load()
