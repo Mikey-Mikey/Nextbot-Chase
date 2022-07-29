@@ -31,7 +31,6 @@ local nextbots = {
 }
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
-	print("Spawning " .. ply:Nick() .. " as spectator")
 	local ang = ply:EyeAngles()
 	ply:SetPos(target:GetPos())
 	ply:Spectate(OBS_MODE_CHASE)
@@ -218,7 +217,6 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end)
 		end
-		print(#alive_people)
 	end
 end
 
