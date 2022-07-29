@@ -200,7 +200,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 					victim:Spawn()
 					spawnAsSpectator(victim,table.Random(alive_people))
 					for k,ply in ipairs(player.GetAll()) do
-						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() then
+						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
 							ply:Spawn()
 							spawnAsSpectator(ply,table.Random(alive_people))
 						end
@@ -225,7 +225,7 @@ function GM:Tick()
 	if SERVER then
 		for _, ply in ipairs(player.GetAll()) do
 			for _, wep in ipairs( ply:GetWeapons() ) do
-				if wep:GetClass() ~= "parkourmod" then
+				if wep:GetClass() != "parkourmod" then
 					ply:StripWeapon( wep:GetClass() )
 				end
 			end
