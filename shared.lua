@@ -7,6 +7,22 @@ GM.Website = "N/A"
 include("utils/chat.lua")
 include("utils/table.lua")
 
+-- Constants
+ROUND_TIME = 60 * 7
+ROUND_RESTART_TIME = 4.0
+NEXTBOT_COUNT = 4
+NEXTBOT_SAFE_DISTANCE = 100
+
+HUD_BACKGROUND_COLOR = Color(0,0,0,200)
+HUD_HEADING_TEXT_COLOR = Color(225,225,225,255)
+HUD_TEXT_COLOR = Color(200,200,200,200)
+
+HUD_TIMER_WIDTH = 150
+HUD_TIMER_HEIGHT = 50
+HUD_TIMER_RADIUS = 5
+HUD_TIMER_TEXT_OFFSET = 3
+HUD_TIMER_PLAYER_LEFT_OFFSET = 26
+
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
@@ -64,9 +80,9 @@ function RestartGame()
 			end
 		end)
 
-		timer.Simple(4.0, function()
+		timer.Simple(ROUND_RESTART_TIME, function()
 
-			timer.Create("chase_Restart", 60 * 7, 1, function()
+			timer.Create("chase_Restart", ROUND_TIME, 1, function()
 				for i, ply in ipairs(alive_people) do
 					reward(ply)
 				end
@@ -80,6 +96,7 @@ function RestartGame()
 				ply:Spawn()
 				ply:GodEnable()
 				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+				-- TODO: Spawn in random navmesh point.
 				timer.Simple(2.0, function()
 					if ply:IsValid() then
 						ply:GodDisable()
@@ -91,7 +108,7 @@ function RestartGame()
 				npc:Remove()
 			end
 
-			for i = 1,4 do -- spawn 4 nextbots
+			for i = 1, NEXTBOT_COUNT do -- spawn NEXTBOT_COUNT nextbots
 				local pos_found = false
 				local areas = navmesh.GetAllNavAreas()
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
@@ -99,7 +116,7 @@ function RestartGame()
 				while not pos_found do
 					pos_found = true
 					for i, ply in ipairs(player.GetAll()) do
-						if ply:GetPos():Distance(pos) < 100 then
+						if ply:GetPos():Distance(pos) < NEXTBOT_SAFE_DISTANCE then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
 							pos_found = false
 						end
@@ -136,11 +153,11 @@ net.Receive("chase_time", function()
 end)
 
 function GM:PostDrawHUD()
-	surface.SetDrawColor(200,200,200,200)
-	draw.RoundedBox(5, ScrW() / 2 - 150 / 2, -5, 150, 50, Color(0,0,0,200))
+	draw.RoundedBox(HUD_TIMER_RADIUS, ScrW() / 2 - HUD_TIMER_WIDTH / 2, -HUD_TIMER_RADIUS, HUD_TIMER_WIDTH, HUD_TIMER_WIDTH, HUD_BACKGROUND_COLOR)
 
-	draw.DrawText(math.floor(chase_time / 60) .. ":" .. string.format("%02d",math.floor(chase_time % 60)), "CloseCaption_Bold", ScrW() / 2, 3, Color(225,225,225,255), TEXT_ALIGN_CENTER)
-	draw.SimpleText("Players Left: " .. #alive_people, "SmallText", ScrW() / 2 - 35, 26)
+	surface.SetDrawColor(HUD_TEXT_COLOR:Unpack())
+	draw.DrawText(math.floor(chase_time / 60) .. ":" .. string.format("%02d",math.floor(chase_time % 60)), "CloseCaption_Bold", ScrW() / 2, HUD_TIMER_TEXT_OFFSET, HUD_HEADING_TEXT_COLOR, TEXT_ALIGN_CENTER)
+	draw.SimpleText("Players Left: " .. #alive_people, "SmallText", ScrW() / 2, HUD_TIMER_PLAYER_LEFT_OFFSET, TEXT_ALIGN_CENTER)
 end
 
 function GM:PlayerNoClip(ply, desiredState)
