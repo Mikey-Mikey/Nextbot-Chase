@@ -83,7 +83,9 @@ function RestartGame()
 				v:SetNoCollideWithTeammates(true)
 				v:Spawn()
 				v:GodEnable()
-				v:SetPos(v:GetPos() + v:GetAimVector() * math.random(100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+				local areas = navmesh.GetAllNavAreas()
+				local pos = areas[math.random(#areas)]:GetRandomPoint()
+				v:SetPos(pos) --for some reason, this is needed to prevent the players from spawning in the same spot
 				timer.Simple(2.0, function()
 					if v:IsValid() then
 						v:GodDisable()
