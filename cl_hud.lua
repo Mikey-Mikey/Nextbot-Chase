@@ -1,7 +1,16 @@
+
+-- Constants --
+FONT_SIZE = 13
+TIMER_WIDTH = 150
+TIMER_HEIGHT = 50
+TIMER_RADIUS = 5
+TIMER_BACKGROUND_COLOR = Color(0, 0, 0, 200)
+TEXT_COLOR = color_white
+
 surface.CreateFont( "SmallText", {
 	font = "CloseCaption_Bold",
 	extended = false,
-	size = 13,
+	size = FONT_SIZE,
 	antialias = true
 })
 
@@ -32,14 +41,13 @@ local surface_SetDrawColor = surface.SetDrawColor
 local draw_DrawText = draw.DrawText
 
 hook.Add("HUDPaint", "mikey_customhud", function()
-	surface_SetDrawColor(200, 200, 200, 200)
-	draw_RoundedBox(5, ScrW() / 2 - 150 / 2, -5, 150, 50, Color(0, 0, 0, 200))
+	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WDITH / 2, -TIMER_RADIUS, TIMER_WDITH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
 
 	// calculate time left
 	local minutes = math.floor(chase_time / 60)
 	local seconds = math.floor(chase_time % 60)
 	local formatted_seconds = string.format("%02d", seconds)		// formats the string so it always has 2 digits, such as 09 instead of 9
 
-	draw_DrawText(minutes .. ":" .. formatted_seconds, "CloseCaption_Bold", ScrW() / 2, 3, color_white, TEXT_ALIGN_CENTER)
-	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.025, color_white, TEXT_ALIGN_CENTER)
+	draw_DrawText(minutes .. ":" .. formatted_seconds, "CloseCaption_Bold", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
+	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.025, TEXT_COLOR, TEXT_ALIGN_CENTER)
 end)
