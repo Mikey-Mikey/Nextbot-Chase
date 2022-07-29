@@ -1,5 +1,5 @@
 function GM:PlayerNoClip(ply, desiredState)
-	return ply:IsSuperAdmin()
+	return false
 end
 
 hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply)
