@@ -216,7 +216,7 @@ function GM:Tick()
 	-- TODO: Optimize this, it definitely does not need to be running every frame
 	if SERVER then
 		for _, ply in ipairs(player.GetAll()) do
-			for _, wep in ipairs( v:GetWeapons() ) do
+			for _, wep in ipairs( ply:GetWeapons() ) do
 				if wep:GetClass() ~= "parkourmod" then
 					ply:StripWeapon( wep:GetClass() )
 				end
