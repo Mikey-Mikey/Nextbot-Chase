@@ -4,9 +4,10 @@ GM.Email = "N/A"
 GM.Website = "N/A"
 
 -- Includes
+AddCSLuaFile("utils/chat.lua")
+AddCSLuaFile("utils/table.lua")
 include("utils/chat.lua")
 include("utils/table.lua")
-
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
