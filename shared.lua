@@ -182,8 +182,9 @@ function GM:PlayerSpawn(ply)
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			local randomPly = table.Random(alive_people)
 			while not randomPly:IsValid() do
-				spawnAsSpectator(ply,randomPly)
+				randomPly = table.Random(alive_people)
 			end
+			spawnAsSpectator(ply,randomPly)
 		end
 	end)
 end
