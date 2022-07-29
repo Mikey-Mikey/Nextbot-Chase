@@ -96,15 +96,17 @@ function RestartGame()
 			end
 
 			for i = 1,4 do -- spawn 4 nextbots
+				local sample = 0
 				local pos_found = false
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
-				while not pos_found do
+				while not pos_found and sample < 1000 do
 					pos_found = true
 					for _, ply in ipairs(player.GetAll()) do
 						if ply:GetPos():Distance(pos) < 200 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
 							pos_found = false
+							sample = sample + 1
 						end
 					end
 				end
