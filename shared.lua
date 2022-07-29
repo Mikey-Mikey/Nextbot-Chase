@@ -65,7 +65,7 @@ function RestartGame()
 		timer.Simple(4.0, function()
 			print("RESTART TIMER CREATED")
 
-			timer.Create("chase_Restart", 60 * 7, 1, function()
+			timer.Create("chase_Restart", 60 * 5, 1, function()
 				for _, ply in ipairs(player.GetAll()) do
 					reward(ply)
 				end
