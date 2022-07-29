@@ -3,8 +3,6 @@ GM.Author = "Mikey! with help from Mee, Marshall_vak, and MyUsername"
 GM.Email = "N/A"
 GM.Website = "N/A"
 
-include("utils/chat.lua")
-
 -- Global Variables
 local round = 1
 local alive_people = alive_people or player.GetAll()
