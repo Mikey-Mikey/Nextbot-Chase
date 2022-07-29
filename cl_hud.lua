@@ -41,7 +41,7 @@ local surface_SetDrawColor = surface.SetDrawColor
 local draw_DrawText = draw.DrawText
 
 hook.Add("HUDPaint", "mikey_customhud", function()
-	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WDITH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
+	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WIDTH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
 
 	// calculate time left
 	local minutes = math.floor(chase_time / 60)
