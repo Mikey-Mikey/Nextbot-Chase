@@ -102,7 +102,7 @@ function RestartGame()
 				while not pos_found do
 					pos_found = true
 					for _, ply in ipairs(player.GetAll()) do
-						if ply:GetPos():Distance(pos) < 100 then
+						if ply:GetPos():Distance(pos) < 200 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
 							pos_found = false
 						end
