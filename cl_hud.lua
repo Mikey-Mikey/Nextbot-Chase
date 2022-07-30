@@ -67,7 +67,7 @@ hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
 
 	-- discord command
 	if ply == LocalPlayer() and string.Split(text, " ")[1] == "!discord" then
-		chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]", Color(250, 250, 250), ": " .. "https://discord.gg/pWsZcepe")
+		chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]", Color(250, 250, 250), ": " .. "https://discord.gg/SHaYKb4AFw")
 		return true
 	end
 
