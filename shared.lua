@@ -59,6 +59,7 @@ function reward(ply)
 end
 
 function RestartGame()
+	dead_early = {}
 	timer.Simple(4.0, function()
 		alive_people = player.GetAll()
 	end)
@@ -236,9 +237,12 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 		victim:ChatPrint("You have been killed early, click to respawn!")
 		dead_early[#dead_early + 1] = victim
 		timer.Simple(8.0,function()
-			for k,ply in ipairs(dead_early) do
-				table.RemoveByValue(alive_people, victim)
+			if timer.Exists("SpawnProtect") then
+				for k,ply in ipairs(dead_early) do
+					table.RemoveByValue(alive_people, victim)
+				end
 			end
+			dead_early = {}
 		end)
 	end
 	if #alive_people <= 0 and has_people then
