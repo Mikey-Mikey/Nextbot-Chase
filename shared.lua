@@ -258,4 +258,9 @@ function GM:Tick()
 			net.Broadcast()
 		end)
 	end
+	if SERVER and not timer.Exists("chase_Restart") then
+		net.Start("chase_time")
+		net.WriteInt(0, 16)
+		net.Broadcast()
+	end
 end
