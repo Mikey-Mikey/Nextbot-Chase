@@ -27,13 +27,14 @@ function GM:preRoundStart()
     net.Start("round_state")
     net.WriteString("preRoundStart")
     net.WriteInt(round)
+    net.WriteInt(preRoundTime)
     net.Broadcast()
 
     -- clean up the map with the vars from gmod issue #3637
     game.CleanUpMap( false, { "env_fire", "entityflame", "_firesmoke" } )
     
     -- let the server know that the round is preparing to start
-    runHook("PreRoundStart", round)
+    runHook("PreRoundStart", round, preRoundTime)
 
     -- wait for the round to start
     createTimer("preRoundStart", preRoundTime, 1, function()
@@ -49,12 +50,13 @@ function GM:startRound()
 
     -- let the client know that the round is starting
     net.Start("round_state")
-    net.WriteString("startRound")
+    net.WriteString("RoundStart")
     net.WriteInt(round)
+    net.WriteInt(roundTime)
     net.Broadcast()
 
     -- let the server know that the round is starting
-    runHook("RoundStart", round)
+    runHook("RoundStart", round, roundTime)
 
     -- wait for the round to end
     createTimer("endRoundTime", roundTime, 1, function()
@@ -70,12 +72,13 @@ function GM:endRound()
 
     -- let the client know that the round is ending
     net.Start("round_state")
-    net.WriteString("endRound")
+    net.WriteString("RoundEnd")
     net.WriteInt(round)
+    net.WriteInt(afterRoundTime)
     net.Broadcast()
 
     -- let the server know that the round is ending
-    runHook("RoundEnd", round)
+    runHook("RoundEnd", round, afterRoundTime)
 
     -- wait for the next round to prepare
     createTimer("preRoundStart", afterRoundTime, 1, function()
