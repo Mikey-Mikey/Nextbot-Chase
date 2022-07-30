@@ -198,7 +198,9 @@ if SERVER then
 				end
 				randomPly = table.Random(alive_people)
 			end
-			spawnAsSpectator(ply,randomPly)
+			if ply:GetObserverTarget():IsValid() then
+				spawnAsSpectator(ply,randomPly)
+			end
 		end
 	end
 end
