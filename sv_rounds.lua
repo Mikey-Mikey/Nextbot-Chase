@@ -92,6 +92,10 @@ function GM:endRoundCheck(ply)
     if not #self.players and roundState == 1 then endRound() end
 end
 
+function GM:getRoundState()
+    return roundState
+end
+
 -- tell the round controller to check if the round should end
 hook.Add("PlayerDisconnected", "endRoundCheck", endRoundCheck)
 hook.Add("PostPlayerDeath", "endRoundCheck", endRoundCheck)

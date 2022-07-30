@@ -2,6 +2,8 @@
 local removeValueFromTable = table.RemoveByValue
 local getAllPlayers = player.GetAll
 local random = math.random
+local pairs = pairs
+local IsValid = IsValid
 
 -- prep the network message
 util.AddNetworkString("Spectate")
@@ -31,6 +33,12 @@ function GM:PlayerSpawn(ply)
     net.Start("Spectate")
     net.WriteBool(true)
     net.Send(ply)
+end
+
+function GM:PlayerInitialSpawn(ply)
+    if self:getRoundState() ~= 1 then
+        ply:spawnAsSpectator()
+    end
 end
 
 -- when a player dies, make them a spectator
