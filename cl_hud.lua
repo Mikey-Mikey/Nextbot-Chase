@@ -49,7 +49,7 @@ hook.Add("HUDPaint", "mikey_customhud", function()
 	local formatted_seconds = string.format("%02d", seconds)		-- formats the string so it always has 2 digits, such as 09 instead of 9
 
 	draw_DrawText(minutes .. ":" .. formatted_seconds, "TimerText", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
-	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.030, TEXT_COLOR, TEXT_ALIGN_CENTER)
+	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, 28, TEXT_COLOR, TEXT_ALIGN_CENTER)
 end)
 
 -- custom chat
