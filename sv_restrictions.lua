@@ -1,7 +1,3 @@
-function GM:PlayerNoClip(ply, desiredState)
-	return false
-end
-
 hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
 	return 0
 end )
