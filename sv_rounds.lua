@@ -26,8 +26,8 @@ function GM:preRoundStart()
     -- let the client know that the round is about to start
     net.Start("round_state")
     net.WriteString("preRoundStart")
-    net.WriteInt(round)
-    net.WriteInt(preRoundTime)
+    net.WriteInt(round, 32)
+    net.WriteInt(preRoundTime, 32)
     net.Broadcast()
 
     -- clean up the map with the vars from gmod issue #3637
@@ -51,8 +51,8 @@ function GM:startRound()
     -- let the client know that the round is starting
     net.Start("round_state")
     net.WriteString("RoundStart")
-    net.WriteInt(round)
-    net.WriteInt(roundTime)
+    net.WriteInt(round, 32)
+    net.WriteInt(roundTime, 32)
     net.Broadcast()
 
     -- let the server know that the round is starting
@@ -73,8 +73,8 @@ function GM:endRound()
     -- let the client know that the round is ending
     net.Start("round_state")
     net.WriteString("RoundEnd")
-    net.WriteInt(round)
-    net.WriteInt(afterRoundTime)
+    net.WriteInt(round, 32)
+    net.WriteInt(afterRoundTime, 32)
     net.Broadcast()
 
     -- let the server know that the round is ending
@@ -86,6 +86,11 @@ function GM:endRound()
     end)
 end
 
+-- allow other files on the server to check the round state
+function GM:getRoundState()
+    return roundState
+end
+
 -- check if the round should end
 function GM:endRoundCheck(ply)
     -- if a player is not alive / leaves / spawns after the round has started then remove them from the global player table 
@@ -93,10 +98,6 @@ function GM:endRoundCheck(ply)
 
     -- if the round is active tell the server to end the round
     if not #self.players and roundState == 1 then endRound() end
-end
-
-function GM:getRoundState()
-    return roundState
 end
 
 -- tell the round controller to check if the round should end

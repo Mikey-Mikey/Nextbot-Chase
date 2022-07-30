@@ -50,7 +50,7 @@ hook.Add("HUDPaint", "hud", function()
 	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WIDTH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
 
 	-- calculate time left
-	local timer = timeLeft("chase_time")
+	local timer = timeLeft("chase_time") or 0
 	local minutes = floor(timer / 60)
 	local seconds = floor(timer % 60)
 	local formatted_seconds = format("%02d", seconds)		-- formats the string so it always has 2 digits, such as 09 instead of 9

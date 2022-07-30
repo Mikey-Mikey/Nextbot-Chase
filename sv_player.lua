@@ -21,8 +21,8 @@ function GM:PlayerSpawn(ply)
     ply:SetVelocity(-ply:GetVelocity())
 
     -- actually give the player the weapons in the table
-    for _,ply in pairs(playerWeapons) do
-        ply:Give(v)
+    for _,wep in pairs(playerWeapons) do
+        ply:Give(wep)
     end
 end
 
