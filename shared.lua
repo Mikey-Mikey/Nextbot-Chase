@@ -54,7 +54,7 @@ function spawnAsRoaming(ply)
 end
 
 function reward(ply)
-	chatPrintFancy(ply:GetName() .. " won this round!")
+	chatPrintFancy(ply:GetName() .. " won this round!",ply)
 end
 
 function RestartGame()
@@ -75,7 +75,7 @@ function RestartGame()
 
 			timer.Create("chase_Restart", 60 * 5, 1, function()
 				for _, ply in ipairs(alive_people) do
-					reward(ply,ply)
+					reward(ply)
 				end
 				RestartGame()
 			end)
