@@ -180,10 +180,6 @@ function GM:PlayerSpawn(ply)
 	timer.Simple(0,function()
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			local randomPly = table.Random(alive_people)
-			print("while 3")
-			while not randomPly:IsValid() or not contains(alive_people,randomPly) and #alive_people > 0 do
-				randomPly = table.Random(alive_people)
-			end
 			spawnAsSpectator(ply,randomPly)
 		end
 	end)
