@@ -15,7 +15,6 @@ surface.CreateFont( "SmallText", {
 })
 
 -- Custom HUD
-
 local chase_time = 0
 local ply_count = 0
 

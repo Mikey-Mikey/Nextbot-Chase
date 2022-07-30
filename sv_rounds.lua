@@ -9,12 +9,16 @@ local roundState = 2
 
 -- micro optimizations
 local Color = Color
+local runHook = hook.Run
+local MsgC = MsgC
+local createTimer = timer.Create
+local removeValueFromTable = table.RemoveByValue
 
 -- prep the network message
 util.AddNetworkString("round_state")
 
 -- prep the server for the next round
-local function GM:preRoundStart()
+function GM:preRoundStart()
     -- increace the round counter
     roundState = 0
     round = round + 1
@@ -29,16 +33,16 @@ local function GM:preRoundStart()
     game.CleanUpMap( false, { "env_fire", "entityflame", "_firesmoke" } )
     
     -- let the server know that the round is preparing to start
-    hook.Run("PreRoundStart", round)
+    runHook("PreRoundStart", round)
 
     -- wait for the round to start
-    timer.Create("preRoundStart", preRoundTime, 1, function()
+    createTimer("preRoundStart", preRoundTime, 1, function()
         self:startRound()
     end)
 end
 
 -- start the round
-local function GM:startRound()
+function GM:startRound()
     -- set the internal round state to 1
     roundState = 1
     MsgC(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] Starting Round  " .. round .. "\n")
@@ -50,16 +54,16 @@ local function GM:startRound()
     net.Broadcast()
 
     -- let the server know that the round is starting
-    hook.Run("RoundStart", round)
+    runHook("RoundStart", round)
 
     -- wait for the round to end
-    timer.Create("endRoundTime", roundTime, 1, function()
+    createTimer("endRoundTime", roundTime, 1, function()
         self:endRound()
     end)
 end
 
 -- end the round
-local function GM:endRound()
+function GM:endRound()
     -- set the internal round state to 2
     roundState = 2
     MsgC(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] Ending Round " .. round .. "\n")
@@ -71,18 +75,18 @@ local function GM:endRound()
     net.Broadcast()
 
     -- let the server know that the round is ending
-    hook.Run("RoundEnd", round)
+    runHook("RoundEnd", round)
 
     -- wait for the next round to prepare
-    timer.Create("preRoundStart", afterRoundTime, 1, function()
+    createTimer("preRoundStart", afterRoundTime, 1, function()
         self:preRoundStart()
     end)
 end
 
 -- check if the round should end
-local function GM:endRoundCheck(ply)
+function GM:endRoundCheck(ply)
     -- if a player is not alive / leaves / spawns after the round has started then remove them from the global player table 
-    table.RemoveByValue(self.players, ply)
+    removeValueFromTable(self.players, ply)
 
     -- if the round is active tell the server to end the round
     if not #self.players and roundState == 1 then endRound() end

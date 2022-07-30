@@ -3,6 +3,9 @@ local playerWeapons = {
     "parkourmod"
 }
 
+-- micro optimizations
+local simpleTimer = timer.Simple
+
 -- run when the player spawns
 function GM:PlayerSpawn(ply) 
     -- check if the player is a spectator
@@ -42,7 +45,7 @@ end)
 -- when the round starts after 3 seconds disable spawn protection 
 hook.Add("RoundStart", "players", function(round)
     for _,ply in pairs(player.GetAll()) do
-        timer.Simple(3, function()
+        simpleTimer(3, function()
 			if ply:IsValid() then 
                 ply:GodDisable() 
                 ply:SetNoCollideWithTeammates(false)
@@ -53,27 +56,25 @@ end)
 
 -- if players are not superadmin then they are not allowed to do the following
 hook.Add( "CanPlayerSuicide", "AllowSuicide", function( ply )
-	if ply:IsSuperAdmin() then return true end
-
     return ply:GetObserverMode() == OBS_MODE_NONE
 end )
 
-function GM:PlayerNoClip(ply, desiredState)
-	return ply:IsSuperAdmin()
-end
+hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply, desiredState)
+    return false
+end )
 
 hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply)
-	return ply:IsSuperAdmin()
+	return false
 end )
 
 hook.Add( "PlayerSpawnVehicle", "SpawnBlockVehicle", function(ply)
-	return ply:IsSuperAdmin()
+	return false
 end )
 
 hook.Add( "PlayerSpawnProp", "SpawnBlockProp", function(ply)
-	return ply:IsSuperAdmin()
+	return false
 end )
 
 hook.Add( "PlayerSpawnSENT", "SpawnBlockSENT", function(ply)
-	return ply:IsSuperAdmin()
+	return false
 end )
