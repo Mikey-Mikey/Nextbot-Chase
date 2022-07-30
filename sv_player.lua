@@ -5,6 +5,9 @@ local playerWeapons = {
 
 -- micro optimizations
 local simpleTimer = timer.Simple
+local getAllPlayers = player.GetAll
+local IsValid = IsValid
+local pairs = pairs
 
 -- run when the player spawns
 function GM:PlayerSpawn(ply) 
@@ -29,7 +32,7 @@ hook.Add("preRoundStart", "players", function(round)
     GAMEMODE.players = {}
 
     -- for every player on the server do the following 
-    for _,ply in pairs(player.GetAll()) do
+    for _,ply in pairs(getAllPlayers()) do
         ply:UnSpectate()
         ply:SetTeam(1)
 		ply:SetNoCollideWithTeammates(true)
@@ -44,9 +47,9 @@ end)
 
 -- when the round starts after 3 seconds disable spawn protection 
 hook.Add("RoundStart", "players", function(round)
-    for _,ply in pairs(player.GetAll()) do
+    for _,ply in pairs(getAllPlayers()) do
         simpleTimer(3, function()
-			if ply:IsValid() then 
+			if IsValid(ply) then 
                 ply:GodDisable() 
                 ply:SetNoCollideWithTeammates(false)
             end
