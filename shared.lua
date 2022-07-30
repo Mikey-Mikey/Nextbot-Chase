@@ -75,9 +75,7 @@ function RestartGame()
 
 			timer.Create("chase_Restart", 60 * 5, 1, function()
 				for _, ply in ipairs(alive_people) do
-					if ply:IsValid() then
-						reward(ply)
-					end
+					reward(ply,ply)
 				end
 				RestartGame()
 			end)
