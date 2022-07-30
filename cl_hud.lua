@@ -79,9 +79,9 @@ hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
 		rankcolors[is_dead], is_dead,
 		rankcolors[is_team], is_team,
 		color_black, "[",
-		rankcolors[rank], rank,
+		rankcolors[rank], rank:sub(1,1):upper() .. rank:sub(2),
 		color_black, "] ",
-		rankcolors[rank], ply:GetName():sub(1,1):upper() .. ply:GetName():sub(2),
+		rankcolors[rank], ply:GetName(),
 		color_white, ": " .. text
 	)
 
