@@ -31,13 +31,15 @@ local nextbots = {
 local current_nextbots = current_nextbots or {}
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
-	local ang = ply:EyeAngles()
-	ply:SetPos(target:GetPos())
-	ply:Spectate(OBS_MODE_CHASE)
-	ply:SpectateEntity(target)
-	ply:SetMoveType(MOVETYPE_OBSERVER)
-	ply:SetEyeAngles(ang)
-	ply:StripWeapons()
+	if target:IsValid() then
+		local ang = ply:EyeAngles()
+		ply:SetPos(target:GetPos())
+		ply:Spectate(OBS_MODE_CHASE)
+		ply:SpectateEntity(target)
+		ply:SetMoveType(MOVETYPE_OBSERVER)
+		ply:SetEyeAngles(ang)
+		ply:StripWeapons()
+	end
 end
 
 
@@ -154,7 +156,7 @@ function GM:PlayerDisconnected(ply)
 		if spec:GetObserverMode() != OBS_MODE_NONE and ply == spec:GetObserverTarget() then
 			local randomPly = table.Random(alive_people)
 			print("while 2")
-			while not randomPly:IsValid() and #alive_people > 0 do
+			while not randomPly:IsValid() and #alive_people > 0 and randomPly == spec:GetObserverTarget() do
 				spec:Spawn()
 				spawnAsSpectator(spec,randomPly)
 			end
@@ -179,7 +181,7 @@ function GM:PlayerSpawn(ply)
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			local randomPly = table.Random(alive_people)
 			print("while 3")
-			while not randomPly:IsValid() or not contains(alive_people,randomPly) and #alive_people > 0 do
+			while #alive_people > 0 and randomPly == ply:GetObserverTarget() do
 				randomPly = table.Random(alive_people)
 			end
 			spawnAsSpectator(ply,randomPly)
@@ -209,16 +211,12 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				if #alive_people >= 1 then
 					victim:Spawn()
 					local randomPly = table.Random(alive_people)
-					if randomPly:IsValid() then
-						spawnAsSpectator(victim,randomPly)
-					end
+					spawnAsSpectator(victim,randomPly)
 					for k,ply in ipairs(player.GetAll()) do
 						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim and #alive_people >= 1 then
 							local randomPly = table.Random(alive_people)
-							if randomPly:IsValid() then
-								ply:Spawn()
-								spawnAsSpectator(ply,randomPly)
-							end
+							ply:Spawn()
+							spawnAsSpectator(ply,randomPly)
 						end
 					end
 				end
