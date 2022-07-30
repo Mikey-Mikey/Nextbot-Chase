@@ -10,6 +10,7 @@ if alive_people == nil then
 else
 	alive_people = alive_people
 end
+dead_early = dead_early or {}
 local has_people = has_people or false
 local nextbots = {
 	"npc_wenomachainsama",
@@ -31,7 +32,7 @@ local nextbots = {
 	"npc_thewok",
 	"npc_gru",
 }
-local current_nextbots = {}
+local current_nextbots = current_nextbots or {}
 local contains = table.HasValue
 function spawnAsSpectator(ply,target)
 	local ang = ply:EyeAngles()
