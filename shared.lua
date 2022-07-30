@@ -151,7 +151,7 @@ function GM:PlayerDisconnected(ply)
 	if player.GetCount() == 0 then
 		has_people = false
 	end
-	if ply:GetObserverMode() != OBS_MODE_NONE and contains(alive_people,ply) then
+	if contains(alive_people,ply) then
 		table.RemoveByValue(alive_people, ply)
 	end
 	for k,spec in ipairs(player.GetAll()) do
