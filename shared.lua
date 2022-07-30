@@ -229,7 +229,9 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 		timer.Simple(8.0,function()
 			if timer.Exists("SpawnProtect") then
 				for k,ply in ipairs(dead_early) do
-					table.RemoveByValue(alive_people, victim)
+					if not ply:Alive() then
+						table.RemoveByValue(alive_people, ply)
+					end
 				end
 			end
 			dead_early = {}
