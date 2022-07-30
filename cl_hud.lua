@@ -39,12 +39,7 @@ end)
 -- optimizations
 local draw_RoundedBox = draw.RoundedBox
 local draw_DrawText = draw.DrawText
-hook.Add("OnPlayerChat", "nextbot_discord", function(ply, text)
-	if ply == LocalPlayer() and string.Split(text, " ")[1] == "!discord" then
-		chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]: ", Color(250, 250, 250), "https://discord.gg/pWsZcepe")
-		return true
-	end
-end)
+
 hook.Add("HUDPaint", "mikey_customhud", function()
 	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WIDTH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
 
@@ -55,4 +50,42 @@ hook.Add("HUDPaint", "mikey_customhud", function()
 
 	draw_DrawText(minutes .. ":" .. formatted_seconds, "TimerText", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
 	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.030, TEXT_COLOR, TEXT_ALIGN_CENTER)
+end)
+
+// custom chat
+local rankcolors = {
+	["Superadmin"] = Color(140, 100, 190),
+	["Admin"] = Color(230, 30, 70),
+	["User"] = Color(100, 180, 230),
+	["(TEAM) "] = Color(25, 200, 25),
+	["*DEAD* "] = Color(255, 50, 50),
+}
+
+hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
+	if !ply or !ply:IsValid() then return end
+
+	// discord command
+	if ply == LocalPlayer() then
+		if string.Split(text, " ")[1] == "!discord" then
+			chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]", Color(250, 250, 250), ":", Color(0, 0, 0), "https://discord.gg/pWsZcepe")
+			return true
+		end
+	end
+
+	// rank colors
+	local is_dead = dead and "*DEAD* " or ""
+	local is_team = team and "(TEAM) " or ""
+	local rank = ply:IsSuperAdmin() and "Superadmin" or ply:IsAdmin() and "Admin" or "User"
+	
+	chat.AddText(
+		rankcolors[is_dead], is_dead,
+		rankcolors[is_team], is_team, 
+		color_black, "[",
+		rankcolors[rank], rank,
+		color_black, "] ",
+		rankcolors[rank], ply:GetName(), 
+		color_white, ": " .. text
+	)
+
+	return true
 end)
