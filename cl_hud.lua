@@ -54,9 +54,10 @@ end)
 
 -- custom chat
 local rankcolors = {
-	["Superadmin"] = Color(140, 100, 190),
-	["Admin"] = Color(230, 30, 70),
-	["User"] = Color(100, 180, 230),
+	["owner"] = Color(255, 150, 100),
+	["superadmin"] = Color(140, 100, 190),
+	["admin"] = Color(230, 30, 70),
+	["user"] = Color(100, 180, 230),
 	["(TEAM) "] = Color(25, 200, 25),
 	["*DEAD* "] = Color(255, 50, 50),
 }
@@ -72,8 +73,9 @@ hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
 
 	-- rank colors
 	local is_dead = dead and "*DEAD* " or ""
-	local is_team = team and "(TEAM) " or ""
-	local rank = ply:IsSuperAdmin() and "Superadmin" or ply:IsAdmin() and "Admin" or "User"
+	local is_team = (team and (ply:Team() == LocalPlayer():Team())) and "(TEAM) " or ""
+	local rank = ply:GetUserGroup()
+	
 	chat.AddText(
 		rankcolors[is_dead], is_dead,
 		rankcolors[is_team], is_team,
