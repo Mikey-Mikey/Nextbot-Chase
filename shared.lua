@@ -209,18 +209,10 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				if #alive_people >= 1 then
 					victim:Spawn()
 					local randomPly = table.Random(alive_people)
-					print("while 5")
-					while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people >= 1 do
-						randomPly = table.Random(alive_people)
-					end
 					spawnAsSpectator(victim,randomPly)
 					for k,ply in ipairs(player.GetAll()) do
 						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
 							local randomPly = table.Random(alive_people)
-							print("while 6")
-							while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people >= 1 do
-								randomPly = table.Random(alive_people)
-							end
 							ply:Spawn()
 							spawnAsSpectator(ply,randomPly)
 						end
