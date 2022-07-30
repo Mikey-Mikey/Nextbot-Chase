@@ -3,7 +3,7 @@ function GM:PlayerNoClip(ply, desiredState)
 end
 
 hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
-    return 0
+	return 0
 end )
 
 hook.Add( "PlayerCanHearPlayersVoice", "Maximum Range", function( listener, talker )

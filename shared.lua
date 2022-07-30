@@ -100,8 +100,6 @@ function RestartGame()
 			end
 
 			for i = 1,4 do -- spawn 4 nextbots
-				local sample = 0
-				local pos_found = false
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 				local nextbot_class = nextbots[math.random(#nextbots)]
 				while contains(current_nextbots, nextbot_class) do
