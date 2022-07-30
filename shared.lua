@@ -5,6 +5,7 @@ GM.Website = "N/A"
 
 -- Global Variables
 local round = 1
+local round_ended = round_ended or false
 alive_people = alive_people or player.GetAll()
 dead_early = dead_early or {}
 local has_people = has_people or false
@@ -58,9 +59,11 @@ function reward(ply)
 end
 
 function RestartGame()
+	round_ended = true
 	dead_early = {}
 	timer.Simple(4.0, function()
 		alive_people = player.GetAll()
+		round_ended = false
 	end)
 	if SERVER then
 		timer.Simple(0, function()
@@ -189,7 +192,7 @@ end
 
 if SERVER then
 	function GM:SetupMove(ply,mv,cmd)
-		if not contains(alive_people,ply) and ply:KeyPressed( IN_ATTACK ) and #alive_people > 1 and ply:GetObserverMode() != OBS_MODE_NONE then
+		if not contains(alive_people,ply) and ply:KeyPressed( IN_ATTACK ) and #alive_people > 1 and ply:GetObserverMode() != OBS_MODE_NONE and not round_ended then
 			local randomPly = table.Random(alive_people)
 			print("while 4")
 			while #alive_people > 1 and ply:GetObserverTarget() == randomPly do
