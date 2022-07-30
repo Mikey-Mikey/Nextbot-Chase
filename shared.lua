@@ -106,6 +106,7 @@ function RestartGame()
 					end
 				end
 				local nextbot_class = nextbots[math.random(#nextbots)]
+				print("while 1")
 				while contains(current_nextbots, nextbot_class) do
 					nextbot_class = nextbots[math.random(#nextbots)]
 				end
@@ -152,6 +153,7 @@ function GM:PlayerDisconnected(ply)
 	for k,spec in ipairs(player.GetAll()) do
 		if spec:GetObserverMode() != OBS_MODE_NONE and ply == spec:GetObserverTarget() then
 			local randomPly = table.Random(alive_people)
+			print("while 2")
 			while not randomPly:IsValid() and #alive_people > 0 do
 				spec:Spawn()
 				spawnAsSpectator(spec,randomPly)
@@ -176,6 +178,7 @@ function GM:PlayerSpawn(ply)
 	timer.Simple(0,function()
 		if not contains(alive_people,ply) and #alive_people > 0 then
 			local randomPly = table.Random(alive_people)
+			print("while 3")
 			while not randomPly:IsValid() or not contains(alive_people,randomPly) and #alive_people > 0 do
 				randomPly = table.Random(alive_people)
 			end
@@ -188,6 +191,7 @@ if SERVER then
 	function GM:SetupMove(ply,mv,cmd)
 		if not contains(alive_people,ply) and ply:KeyPressed( IN_ATTACK ) and #alive_people > 1 and ply:GetObserverMode() != OBS_MODE_NONE then
 			local randomPly = table.Random(alive_people)
+			print("while 4")
 			while #alive_people > 1 do
 				if ply:GetObserverTarget():IsValid() then
 					if ply:GetObserverTarget() != randomPly and ply:GetObserverTarget():GetObserverMode() == OBS_MODE_NONE then break end
@@ -210,14 +214,16 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				if #alive_people >= 1 then
 					victim:Spawn()
 					local randomPly = table.Random(alive_people)
-					while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people > 0 do
+					print("while 5")
+					while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people >= 1 do
 						randomPly = table.Random(alive_people)
 					end
 					spawnAsSpectator(victim,randomPly)
 					for k,ply in ipairs(player.GetAll()) do
 						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
 							local randomPly = table.Random(alive_people)
-							while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people > 0 do
+							print("while 6")
+							while (not randomPly:IsValid() or not contains(alive_people,randomPly)) and #alive_people >= 1 do
 								randomPly = table.Random(alive_people)
 							end
 							ply:Spawn()
