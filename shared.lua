@@ -98,7 +98,6 @@ function RestartGame()
 			for _, npc in ipairs(ents.FindByClass("npc_*")) do
 				npc:Remove()
 			end
-			
 			for i = 1,4 do -- spawn 4 nextbots
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
