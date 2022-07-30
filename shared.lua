@@ -5,11 +5,7 @@ GM.Website = "N/A"
 
 -- Global Variables
 local round = 1
-if alive_people == nil then
-	alive_people = player.GetAll()
-else
-	alive_people = alive_people
-end
+alive_people = alive_people or player.GetAll()
 dead_early = dead_early or {}
 local has_people = has_people or false
 local nextbots = {
