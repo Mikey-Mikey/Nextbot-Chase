@@ -213,10 +213,12 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 						spawnAsSpectator(victim,randomPly)
 					end
 					for k,ply in ipairs(player.GetAll()) do
-						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim then
+						if ply:GetObserverMode() != OBS_MODE_NONE and victim == ply:GetObserverTarget() and ply != victim and #alive_people >= 1 then
 							local randomPly = table.Random(alive_people)
-							ply:Spawn()
-							spawnAsSpectator(ply,randomPly)
+							if randomPly:IsValid() then
+								ply:Spawn()
+								spawnAsSpectator(ply,randomPly)
+							end
 						end
 					end
 				end
