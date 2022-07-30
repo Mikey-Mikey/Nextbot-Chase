@@ -98,22 +98,16 @@ function RestartGame()
 			for _, npc in ipairs(ents.FindByClass("npc_*")) do
 				npc:Remove()
 			end
-
+			
 			for i = 1,4 do -- spawn 4 nextbots
-				local sample = 0
-				local pos_found = false
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
-				while not pos_found do
-					pos_found = true
+				for k = 0,100 do
 					for _, ply in ipairs(player.GetAll()) do
 						if ply:GetPos():Distance(pos) < 200 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
-							pos_found = false
 						end
 					end
-					sample = sample + 1
-					if sample > 100 then break end
 				end
 				local nextbot_class = nextbots[math.random(#nextbots)]
 				while contains(current_nextbots, nextbot_class) do

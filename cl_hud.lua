@@ -75,7 +75,6 @@ hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
 	local is_dead = dead and "*DEAD* " or ""
 	local is_team = (team and (ply:Team() == LocalPlayer():Team())) and "(TEAM) " or ""
 	local rank = ply:GetUserGroup()
-	
 	chat.AddText(
 		rankcolors[is_dead], is_dead,
 		rankcolors[is_team], is_team,
