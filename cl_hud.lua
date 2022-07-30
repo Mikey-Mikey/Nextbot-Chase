@@ -52,7 +52,7 @@ hook.Add("HUDPaint", "mikey_customhud", function()
 	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, ScrH() * 0.030, TEXT_COLOR, TEXT_ALIGN_CENTER)
 end)
 
-// custom chat
+-- custom chat
 local rankcolors = {
 	["Superadmin"] = Color(140, 100, 190),
 	["Admin"] = Color(230, 30, 70),
@@ -64,26 +64,23 @@ local rankcolors = {
 hook.Add("OnPlayerChat", "nextbot_customchat", function(ply, text, team, dead)
 	if !ply or !ply:IsValid() then return end
 
-	// discord command
-	if ply == LocalPlayer() then
-		if string.Split(text, " ")[1] == "!discord" then
-			chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]", Color(250, 250, 250), ":", Color(0, 0, 0), "https://discord.gg/pWsZcepe")
-			return true
-		end
+	-- discord command
+	if ply == LocalPlayer() and string.Split(text, " ")[1] == "!discord" then
+		chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]", Color(250, 250, 250), ":", Color(0, 0, 0), "https://discord.gg/pWsZcepe")
+		return true
 	end
 
-	// rank colors
+	-- rank colors
 	local is_dead = dead and "*DEAD* " or ""
 	local is_team = team and "(TEAM) " or ""
 	local rank = ply:IsSuperAdmin() and "Superadmin" or ply:IsAdmin() and "Admin" or "User"
-	
 	chat.AddText(
 		rankcolors[is_dead], is_dead,
-		rankcolors[is_team], is_team, 
+		rankcolors[is_team], is_team,
 		color_black, "[",
 		rankcolors[rank], rank,
 		color_black, "] ",
-		rankcolors[rank], ply:GetName(), 
+		rankcolors[rank], ply:GetName(),
 		color_white, ": " .. text
 	)
 
