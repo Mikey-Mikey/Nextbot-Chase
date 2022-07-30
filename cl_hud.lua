@@ -33,7 +33,9 @@ end)
 net.Receive("chase_player_count", function()
 	ply_count = net.ReadInt(8)
 end)
-
+timer.Create("Discord Message", 60 * 5, 0, function()
+	chat.AddText(Color(10, 10, 10), "[", Color(100, 0, 255), "Discord", Color(10, 10, 10), "]: ", Color(250, 250, 250), "do !discord for the link!")
+end)
 -- optimizations
 local draw_RoundedBox = draw.RoundedBox
 local draw_DrawText = draw.DrawText
