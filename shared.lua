@@ -192,15 +192,10 @@ if SERVER then
 		if not contains(alive_people,ply) and ply:KeyPressed( IN_ATTACK ) and #alive_people > 1 and ply:GetObserverMode() != OBS_MODE_NONE then
 			local randomPly = table.Random(alive_people)
 			print("while 4")
-			while #alive_people > 1 do
-				if ply:GetObserverTarget():IsValid() then
-					if ply:GetObserverTarget() != randomPly and ply:GetObserverTarget():GetObserverMode() == OBS_MODE_NONE then break end
-				end
+			while #alive_people > 1 and ply:GetObserverTarget() == randomPly do
 				randomPly = table.Random(alive_people)
 			end
-			if randomPly:IsValid() then
-				spawnAsSpectator(ply,randomPly)
-			end
+			spawnAsSpectator(ply,randomPly)
 		end
 	end
 end
