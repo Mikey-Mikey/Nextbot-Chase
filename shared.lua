@@ -209,7 +209,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 
 		if #alive_people >= 1 then
 			timer.Simple(2.0, function()
-				if #alive_people >= 1 then
+				if #alive_people >= 1 and not round_ended then
 					victim:Spawn()
 					local randomPly = table.Random(alive_people)
 					spawnAsSpectator(victim,randomPly)
