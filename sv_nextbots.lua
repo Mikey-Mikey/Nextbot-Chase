@@ -1,5 +1,5 @@
--- table of bots activly in the game and running around the server killing people
-local activeBots = {}
+-- how many next bots shound be spawned by default
+local baseNextBotCount = 2
 
 -- table of bots that are able to be spawned
 local nextbots = {
@@ -20,22 +20,58 @@ local nextbots = {
 	"npc_smiler"
 }
 
+-- table of bots activly in the game and running around the server killing people
+local activeBots = {}
+
+-- areas in the nav mesh (set pre round)
+local areas
+
+-- micro optimizations
+local random = math.random
+local pairs = pairs
+local ipairs = ipairs
+local IsValid = IsValid
+local getAllPlayers = player.GetAll
+
 -- spawn bots at a random location
 local function spawnBots(amount)
-    if amount == nil then amount = 2 end
-    
+		for i = 1,amount do
+		local pos_found = false
+		local pos
 
+
+		while not pos_found do
+			for _, ply in ipairs(getAllPlayers()) do
+				pos = areas[random(#areas)]:GetRandomPoint()
+
+				if ply:GetPos():Distance(pos) > 100 then
+					pos_found = true
+				end
+			end
+		end
+
+		local nextbot = ents.Create(nextbots[random(#nextbots)])
+
+		nextbot:SetPos(pos)
+		nextbot:Spawn()
+
+		activeBots[#activeBots + 1] = nextbot
+	end
 end
 
 
 hook.Add("preRoundStart", "SpawnBots", function(round)
-    
+    areas = navmesh.GetAllNavAreas()
 end)
 
+-- round the amount of connected players up then divide by 10 (if there are 5 players on round up to 10 then devide by 10 to get 1) 
+-- after all of that add the base next bot count then spawn that many bots
 hook.Add("RoundStart", "SpawnBots", function(round)
-    
+	spawnBots((math.Round(#getAllPlayers(), -1) / 10) + baseNextBotCount)
 end)
 
 hook.Add("RoundEnd", "SpawnBots", function(round)
-    
+    for _, ent in ipairs(activeBots) do
+		if IsValid(ent) then ent:Remove() end
+	end
 end)
