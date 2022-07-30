@@ -28,7 +28,8 @@ local nextbots = {
 	"npc_quandaledingle",
 	"npc_smiler",
 	"npc_jungler",
-	"npc_thewok"
+	"npc_thewok",
+	"npc_gru",
 }
 local current_nextbots = {}
 local contains = table.HasValue
