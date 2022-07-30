@@ -231,10 +231,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 		end
 	end
 	if timer.Exists("SpawnProtect") then
-		if #dead_early <= 0 then
-			--send a message in chat
-			victim:ChatPrint("You have been killed early, click to respawn!")
-		end
+		victim:ChatPrint("You have been killed early, click to respawn!")
 		dead_early[#dead_early + 1] = victim
 		timer.Simple(8.0,function()
 			for k,ply in ipairs(dead_early) do
