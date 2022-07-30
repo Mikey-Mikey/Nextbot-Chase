@@ -20,6 +20,12 @@ local nextbots = {
 	"npc_smiler"
 }
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-- need to find a way to use list.Get("NPC")
+-- StarFrost 7/30/2022, 11:53:17 AM Easily? I don't know. Your best bet is probably list.Get("NPC") since you'll be able to get every npc/nextbot. Only way I know of recognizing whatever class name is a nextbot is actually spawning down the entity and testing :IsNextBot() but that sounds very costly
+-- Marshall_vak 7/30/2022, 11:54:21 AM that does sound costly
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 -- table of bots activly in the game and running around the server killing people
 local activeBots = {}
 
