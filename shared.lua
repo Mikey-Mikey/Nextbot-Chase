@@ -252,13 +252,8 @@ function GM:Tick()
 	if SERVER and not timer.Exists("chase_sync") and timer.Exists("chase_Restart") then
 		timer.Create("chase_sync",1,0,function()
 			net.Start("chase_time")
-			net.WriteInt(timer.TimeLeft("chase_Restart"), 16)
+			net.WriteInt(timer.TimeLeft("chase_Restart") or 0, 16)
 			net.Broadcast()
 		end)
-	end
-	if SERVER and not timer.Exists("chase_Restart") then
-		net.Start("chase_time")
-		net.WriteInt(0, 16)
-		net.Broadcast()
 	end
 end
