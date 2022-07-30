@@ -29,7 +29,7 @@ local nextbots = {
 	"npc_smiler",
 	"npc_jungler",
 	"npc_thewok",
-	"npc_gru"
+	"npc_gru",
 }
 local current_nextbots = {}
 local contains = table.HasValue
@@ -206,6 +206,7 @@ if SERVER then
 		end
 	end
 end
+local dead_early = {}
 function GM:PostPlayerDeath(victim, inflictor, attacker)
 	if contains(alive_people,victim) and not timer.Exists("SpawnProtect") then
 		table.RemoveByValue(alive_people, victim)
@@ -228,6 +229,14 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end)
 		end
+	end
+	if timer.Exists("SpawnProtect") then
+		dead_early[#dead_early + 1] = victim
+		timer.Simple(5.0,function()
+			for k,ply in ipairs(dead_early) do
+				table.RemoveByValue(alive_people, victim)
+			end
+		end)
 	end
 	if #alive_people <= 0 and has_people then
 		RestartGame()
