@@ -92,7 +92,7 @@ function RestartGame()
 			for _, ply in ipairs(player.GetAll()) do
 				ply:UnSpectate()
 				ply:Spawn()
-				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(32) * Vector(1,1,0))
+				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(64) * Vector(1,1,0))
 				ply:SetTeam(1)
 				ply:SetNoCollideWithTeammates(true)
 				ply:GodEnable()
