@@ -42,15 +42,15 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 -- when a player dies, make them a spectator
-hook.Add("PostPlayerDeath", "spectate", function()
-    removeValueFromTable(self.Players, ply)
+function GM:PostPlayerDeath(ply)
+    removeValueFromTable(self.players, ply)
     
-    if #self.Players then
-        ply:spawnAsSpectator(self.Players[random(1, #self.Players)])
+    if #self.players then
+        ply:spawnAsSpectator(self.players[random(1, #self.players)])
     else
         ply:spawnAsSpectator()
     end
-end )
+end 
 
 -- before the round starts reset spectate value
 hook.Add("PreRoundStart", "spectate", function(round)
@@ -72,12 +72,12 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
 
     if key == IN_ATTACK then
-        ply:spawnAsSpectator(GAMEMODE.Players[random(1, #GAMEMODE.Players)])
+        ply:spawnAsSpectator(GAMEMODE.players[random(1, #GAMEMODE.players)])
     elseif key == IN_ATTACK2 then
         if ply:GetObserverMode() == OBS_MODE_CHASE then
             ply:spawnAsSpectator()
         else
-            ply:spawnAsSpectator(GAMEMODE.Players[random(1, #GAMEMODE.Players)])
+            ply:spawnAsSpectator(GAMEMODE.players[random(1, #GAMEMODE.players)])
         end
     end
 end )
