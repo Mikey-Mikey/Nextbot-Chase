@@ -32,7 +32,9 @@ local ply_count = 0
 
 -- create a timer on the client when the round starts
 hook.Add("RoundStart", "hud", function(round, roundTime)
-	timer.Create("chase_time", roundTime, 0)
+	timer.Create("chase_time", roundTime, 0, function()
+		
+	end)
 end)
 
 -- update alive player count, runs once a second so its a pretty low calculation
