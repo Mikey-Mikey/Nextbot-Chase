@@ -232,6 +232,8 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				for k,ply in ipairs(dead_early) do
 					if not ply:Alive() then
 						table.RemoveByValue(alive_people, ply)
+						ply:Spawn()
+						spawnAsSpectator(ply,table.Random(alive_people))
 					end
 				end
 			end
