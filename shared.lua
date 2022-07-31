@@ -88,7 +88,7 @@ function RestartGame()
 			for _, ply in ipairs(player.GetAll()) do
 				ply:UnSpectate()
 				ply:Spawn()
-				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(64) * Vector(1,1,0))
+				ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(32) * Vector(1,1,0))
 				ply:SetTeam(1)
 				ply:SetNoCollideWithTeammates(true)
 				ply:GodEnable()
@@ -105,7 +105,7 @@ function RestartGame()
 			for i = 1,4 do -- spawn 4 nextbots
 				local pos = areas[math.random(#areas)]:GetRandomPoint()
 
-				for k = 0,100 do
+				for k = 0,1000 do
 					for _, ply in ipairs(player.GetAll()) do
 						if ply:GetPos():Distance(pos) < 200 then
 							pos = areas[math.random(#areas)]:GetRandomPoint()
