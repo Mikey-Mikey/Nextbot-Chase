@@ -10,6 +10,7 @@ include( "shared.lua" )
 include( "sv_player.lua" )
 include( "sv_nextbots.lua" )
 include( "sv_rounds.lua" )
+include( "sv_spectate.lua" )
 
 -- create the global inplay player table 
 GM.players = {}
