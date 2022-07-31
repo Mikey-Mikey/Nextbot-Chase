@@ -65,8 +65,8 @@ local function spawnBots(amount)
 	end
 end
 
-
-hook.Add("preRoundStart", "SpawnBots", function(round)
+-- before the round starts generate the areas of the nav mesh
+hook.Add("PreRoundStart", "SpawnBots", function(round)
     areas = navmesh.GetAllNavAreas()
 end)
 

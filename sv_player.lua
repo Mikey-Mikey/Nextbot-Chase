@@ -27,7 +27,7 @@ function GM:PlayerSpawn(ply)
 end
 
 -- run when the server is a
-hook.Add("preRoundStart", "players", function(round)
+hook.Add("PreRoundStart", "players", function(round)
     -- clear the global alive players table on round start
     GAMEMODE.players = {}
 

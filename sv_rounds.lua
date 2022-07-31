@@ -46,7 +46,7 @@ end
 function GM:startRound()
     -- set the internal round state to 1
     roundState = 1
-    MsgC(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] Starting Round  " .. round .. "\n")
+    MsgC(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] Starting Round " .. round .. "\n")
 
     -- let the client know that the round is starting
     net.Start("round_state")
