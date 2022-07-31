@@ -66,17 +66,17 @@ local function spawnBots(amount)
 end
 
 -- before the round starts generate the areas of the nav mesh
-hook.Add("PreRoundStart", "SpawnBots", function(round)
+hook.Add("PreRoundStart", "nextbots", function(round)
     areas = navmesh.GetAllNavAreas()
 end)
 
 -- round the amount of connected players up then divide by 10 (if there are 5 players on round up to 10 then devide by 10 to get 1) 
 -- after all of that add the base next bot count then spawn that many bots
-hook.Add("RoundStart", "SpawnBots", function(round)
+hook.Add("RoundStart", "nextbots", function(round)
 	spawnBots((math.Round(#getAllPlayers(), -1) / 10) + baseNextBotCount)
 end)
 
-hook.Add("RoundEnd", "SpawnBots", function(round)
+hook.Add("RoundEnd", "nextbots", function(round)
     for _, ent in ipairs(activeBots) do
 		if IsValid(ent) then ent:Remove() end
 	end

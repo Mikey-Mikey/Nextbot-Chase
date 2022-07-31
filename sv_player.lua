@@ -58,26 +58,26 @@ hook.Add("RoundStart", "players", function(round)
 end)
 
 -- if players are not superadmin then they are not allowed to do the following
-hook.Add( "CanPlayerSuicide", "AllowSuicide", function( ply )
+hook.Add( "CanPlayerSuicide", "players", function( ply )
     return ply:GetObserverMode() == OBS_MODE_NONE
 end )
 
-hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply, desiredState)
+hook.Add( "PlayerSpawnSWEP", "players", function(ply, desiredState)
     return false
 end )
 
-hook.Add( "PlayerSpawnSWEP", "SpawnBlockSWEP", function(ply)
+hook.Add( "PlayerCanNoclip", "players", function(ply)
+    return false
+end )
+
+hook.Add( "PlayerSpawnVehicle", "players", function(ply)
 	return false
 end )
 
-hook.Add( "PlayerSpawnVehicle", "SpawnBlockVehicle", function(ply)
+hook.Add( "PlayerSpawnProp", "players", function(ply)
 	return false
 end )
 
-hook.Add( "PlayerSpawnProp", "SpawnBlockProp", function(ply)
-	return false
-end )
-
-hook.Add( "PlayerSpawnSENT", "SpawnBlockSENT", function(ply)
+hook.Add( "PlayerSpawnSENT", "players", function(ply)
 	return false
 end )
