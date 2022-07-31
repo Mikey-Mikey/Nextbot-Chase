@@ -73,7 +73,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
 
     if key == IN_ATTACK then
         ply:spawnAsSpectator(GAMEMODE.Players[random(1, #GAMEMODE.Players)])
-    else if key == IN_ATTACK2 then
+    elseif key == IN_ATTACK2 then
         if ply:GetObserverMode() == OBS_MODE_CHASE then
             ply:spawnAsSpectator()
         else
