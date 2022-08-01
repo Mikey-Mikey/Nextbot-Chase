@@ -118,7 +118,13 @@ hook.Add("PlayerUse", "players", function(ply,ent)
                 ply.cooldown = false
             end)
         end
+
+        if ply.cooldown == true and ent:IsValid() then
+            ply:ChatPrint("You can't pick up props until", timer.TimeLeft(tostring(ply) .. "cooldown"), "seconds!")
+        end
+
         ply.cooldown = true
+
         return ent:GetClass() ~= "prop_door_rotating"
     end
     return ply:GetObserverMode() == OBS_MODE_NONE
