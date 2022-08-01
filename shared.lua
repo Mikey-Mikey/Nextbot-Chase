@@ -257,9 +257,5 @@ function GM:Tick()
 	end
 end
 hook.Add("AU.CanHandlePlayer","player_stuck",function(ply)
-	if ply:GetObserverMode() == OBS_MODE_NONE then
-		return true
-	else
-		return false
-	end
+	return ply:GetObserverMode() == OBS_MODE_NONE
 end)
