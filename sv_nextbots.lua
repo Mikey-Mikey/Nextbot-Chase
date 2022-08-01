@@ -17,7 +17,14 @@ local nextbots = {
 	"npc_cheemsburger",
 	"npc_selenedelgado",
 	"npc_quandaledingle",
-	"npc_smiler"
+	"npc_smiler",
+	"npc_jungler",
+	"npc_thewok",
+	"npc_gru",
+	"npc_morbius",
+	"npc_ishowspeed",
+	"npc_polishcow",
+	"npc_putin",
 }
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
