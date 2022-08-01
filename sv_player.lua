@@ -34,9 +34,9 @@ hook.Add("PreRoundStart", "players", function(round)
     -- for every player on the server do the following 
     for _,ply in pairs(getAllPlayers()) do
         ply:UnSpectate()
+        ply:Spawn()
         ply:SetTeam(1)
 		ply:SetNoCollideWithTeammates(true)
-        ply:Spawn()
         ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
         ply:GodEnable()
 
