@@ -32,16 +32,18 @@ hook.Add("PreRoundStart", "players", function(round)
     GAMEMODE.players = {}
 
     -- for every player on the server do the following 
-    for _,ply in pairs(getAllPlayers()) do
-        ply:UnSpectate()
-        ply:Spawn()
-        ply:SetTeam(1)
-		ply:SetNoCollideWithTeammates(true)
-        ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
-        ply:GodEnable()
+    for i,ply in pairs(getAllPlayers()) do
+        timer.Simple(i * 0.05, function()
+            ply:UnSpectate()
+            ply:Spawn()
+            ply:SetTeam(1)
+            ply:SetNoCollideWithTeammates(true)
+            ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+            ply:GodEnable()
 
-        -- add the player to the global alive players table
-        GAMEMODE.players[#GAMEMODE.players + 1] = ply
+            -- add the player to the global alive players table
+            GAMEMODE.players[#GAMEMODE.players + 1] = ply
+        end)
     end
 end)
 
