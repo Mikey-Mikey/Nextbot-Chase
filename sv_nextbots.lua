@@ -58,7 +58,7 @@ local function spawnBots(amount)
 			for _, ply in ipairs(getAllPlayers()) do
 				pos = areas[random(#areas)]:GetRandomPoint()
 
-				if ply:GetPos():Distance(pos) > 100 then
+				if ply:GetPos():Distance(pos) > 200 then
 					pos_found = true
 				end
 			end

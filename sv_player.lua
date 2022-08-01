@@ -44,7 +44,7 @@ hook.Add("PreRoundStart", "players", function(round)
             -- add the player to the global alive players table
             GAMEMODE.players[#GAMEMODE.players + 1] = ply
         else
-            timer.Simple(i * 0.1, function()
+            timer.Simple(i * 0.15, function()
                 ply:UnSpectate()
                 ply:Spawn()
                 ply:SetTeam(1)
