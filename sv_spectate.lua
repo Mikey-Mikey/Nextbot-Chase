@@ -105,7 +105,7 @@ hook.Add( "CanPlayerSuicide", "players", function( ply )
 end )
 
 hook.Add("PlayerCanPickupItem", "playersItem", function(ply,ent)
-    if ply:GetObserverMode() ~= OBS_MODE_NONE or not ply:IsValid() then return end
+    if ply:GetObserverMode() == OBS_MODE_NONE or not ply:IsValid() then return true end
     ply.cooldown = true
     timer.Simple(2.0, function()
         ply.cooldown = false
