@@ -232,7 +232,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 		dead_early[#dead_early + 1] = victim
 		timer.Simple(8.0,function()
 			for k,ply in ipairs(dead_early) do
-				if contains(alive_people,ply) then
+				if contains(alive_people,ply) and not ply:Alive() then
 					table.RemoveByValue(alive_people, ply)
 					ply:Spawn()
 					spawnAsSpectator(ply,table.Random(alive_people))
