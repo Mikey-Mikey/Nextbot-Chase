@@ -1,6 +1,6 @@
 -- round controller config
 local preRoundTime = 1
-local roundTime = 420
+local roundTime = 300
 local afterRoundTime = 1
 
 -- round controller internal variables
