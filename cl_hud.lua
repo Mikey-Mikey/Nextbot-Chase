@@ -36,7 +36,6 @@ hook.Add("RoundStart", "hud", function(round, roundTime)
 		
 	end)
 end)
-
 -- update alive player count, runs once a second so its a pretty low calculation
 timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
@@ -46,7 +45,14 @@ timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 		end
 	end
 end)
-
+hook.Add("RoundEnd", "hud", function()
+	if CLIENT then
+		-- say in chat the players that won
+		for _, ply in ipairs(GAMEMODE.players) do
+			chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "]", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), "won this round!")
+		end
+	end
+end)
 -- Actually draw the hud
 hook.Add("HUDPaint", "hud", function()
 	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WIDTH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
