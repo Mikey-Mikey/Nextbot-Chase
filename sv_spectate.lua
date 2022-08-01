@@ -43,18 +43,22 @@ end
 
 -- when a player dies, make them a spectator
 function GM:PostPlayerDeath(victim)
-    removeValueFromTable(self.players, victim)
-    for _,ply in pairs(getAllPlayers()) do
-        if ply:GetObserverTarget() == victim then
-            timer.Simple(1.0,function()
-                ply:spawnAsSpectator(self.players[random(1, #self.players)])
-            end)
+    if not timer.Exists("Spawn Protection") then
+        removeValueFromTable(self.players, victim)
+        for _,ply in pairs(getAllPlayers()) do
+            if ply:GetObserverTarget() == victim then
+                timer.Simple(1.0,function()
+                    ply:spawnAsSpectator(self.players[random(1, #self.players)])
+                end)
+            end
         end
-    end
-    if #self.players then
-        victim:spawnAsSpectator(self.players[random(1, #self.players)])
+        if #self.players then
+            victim:spawnAsSpectator(self.players[random(1, #self.players)])
+        else
+            victim:spawnAsSpectator()
+        end
     else
-        victim:spawnAsSpectator()
+        victim:ChatPrint("You died early, click to respawn!")
     end
 end 
 

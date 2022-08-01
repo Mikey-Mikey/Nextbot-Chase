@@ -43,6 +43,7 @@ hook.Add("PreRoundStart", "players", function(round)
         -- add the player to the global alive players table
         GAMEMODE.players[#GAMEMODE.players + 1] = ply
     end
+    timer.Create("Spawn Protection", 1.0, 1, function() end)
 end)
 
 -- when the round starts after 3 seconds disable spawn protection 
