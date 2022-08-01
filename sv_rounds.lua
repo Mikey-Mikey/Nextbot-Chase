@@ -5,7 +5,7 @@ local afterRoundTime = 1
 
 -- round controller internal variables
 local round = 0
-local roundState = 2
+local roundState = 3
 
 -- micro optimizations
 local Color = Color
@@ -105,5 +105,8 @@ hook.Add("PlayerDisconnected", "endRoundCheck", endRoundCheck)
 hook.Add("PostPlayerDeath", "endRoundCheck", endRoundCheck)
 hook.Add("PlayerInitialSpawn", "endRoundCheck", endRoundCheck)
 
--- this gamemode is simple enough we can just run the round on server start
-GAMEMODE:preRoundStart()
+hook.Add("PlayerSpawn", "startrcsys", function( ply )
+    if roundState ~= 3 then return end
+
+    GAMEMODE:preRoundStart()
+end)
