@@ -7,6 +7,6 @@ end
 hook.Add("PlayerSay","chat",function(ply,text,team)
     if string.find(text,"nigger") or string.find(text,"nigga") then
         RunConsoleCommand("ulx ban " .. ply:GetName() .. " " .. 1440)
-        return "******"
+        return false
     end
 end)
