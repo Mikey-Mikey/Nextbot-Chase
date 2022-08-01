@@ -37,9 +37,8 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)
-    ply.spectating = false
-
-    ply:spawnAsSpectator()
+    ply.spectating = true
+    ply:spawnAsSpectator(self.players[random(1, #self.players)])
 end
 
 -- when a player dies, make them a spectator
