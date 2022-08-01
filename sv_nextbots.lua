@@ -48,7 +48,7 @@ local getAllPlayers = player.GetAll
 
 -- spawn bots at a random location
 local function spawnBots(amount)
-		for i = 1,amount do
+	for i = 1,amount do
 		local pos_found = false
 		local pos
 
@@ -81,7 +81,7 @@ end)
 -- after all of that add the base next bot count then spawn that many bots
 hook.Add("RoundStart", "nextbots", function(round)
 	local min,max = game.GetWorld():GetModelBounds()
-	spawnBots((math.Round(max:Length() / 3000, -1)) + baseNextBotCount)
+	spawnBots((math.Round(max:Length()) / 3000) + baseNextBotCount)
 end)
 
 hook.Add("RoundEnd", "nextbots", function(round)
