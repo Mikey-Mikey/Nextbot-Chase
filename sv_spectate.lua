@@ -83,7 +83,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
 
     if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-        while ply:GetObserverTarget() == randomPly and randomPly:GetObserverMode() ~= OBS_MODE_NONE and not inTable(GAMEMODE.players, randomPly) and #GAMEMODE.players > 1 do
+        while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
             randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         end
     end
