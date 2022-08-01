@@ -17,7 +17,7 @@ local TIMER_HEIGHT = 50
 local TIMER_RADIUS = 8
 local TIMER_BACKGROUND_COLOR = Color(0, 0, 0, 200)
 local TEXT_COLOR = color_white
-
+GAMEMODE.players = {}
 -- create a font so we can have smaller text
 surface.CreateFont( "SmallText", {
 	font = "CloseCaption_Bold",
@@ -41,6 +41,7 @@ timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
 	for _, v in ipairs(getAllPlayers()) do
 		if v:GetObserverMode() == OBS_MODE_NONE then
+			GAMEMODE.players[#GAMEMODE.players + 1] = v
 			ply_count = ply_count + 1
 		end
 	end
