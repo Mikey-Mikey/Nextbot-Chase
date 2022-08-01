@@ -1,5 +1,5 @@
 -- how many next bots shound be spawned by default
-local baseNextBotCount = 2
+local baseNextBotCount = 3
 
 -- table of bots that are able to be spawned
 local nextbots = {
