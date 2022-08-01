@@ -38,7 +38,7 @@ hook.Add("PreRoundStart", "players", function(round)
             ply:Spawn()
             ply:SetTeam(1)
             ply:SetNoCollideWithTeammates(true)
-            ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+            ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,16)) --for some reason, this is needed to prevent the players from spawning in the same spot
 
             -- add the player to the global alive players table
             GAMEMODE.players[#GAMEMODE.players + 1] = ply
@@ -48,7 +48,7 @@ hook.Add("PreRoundStart", "players", function(round)
                 ply:Spawn()
                 ply:SetTeam(1)
                 ply:SetNoCollideWithTeammates(true)
-                ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,100)) --for some reason, this is needed to prevent the players from spawning in the same spot
+                ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,16)) --for some reason, this is needed to prevent the players from spawning in the same spot
     
                 -- add the player to the global alive players table
                 GAMEMODE.players[#GAMEMODE.players + 1] = ply
