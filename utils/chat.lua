@@ -5,8 +5,8 @@ function chatPrintFancy(msg)
 end
 
 hook.Add("PlayerSay","chat",function(ply,text,team)
-    if string.find(text,"nig") then
-        RunConsoleCommand("ulx ban",ply,1440)
+    if string.find(text,"nigger") or string.find(text,"nigga") then
+        RunConsoleCommand("ulx ban " .. ply:GetName() .. " " .. 1440)
         return "******"
     end
 end)
