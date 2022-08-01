@@ -17,12 +17,12 @@ function PlayerMeta:spawnAsSpectator(target)
 
     if not self:Alive() then self:Spawn() end
 
-    if not IsValid(target) then 
-        self:Spectate(OBS_MODE_ROAMING)
-    else
+    if IsValid(target) then 
         self:Spectate(OBS_MODE_CHASE)
         self:SpectateEntity(target)
         self:SetPos(target:GetPos())
+    else
+        self:Spectate(OBS_MODE_ROAMING)
     end
 end
 
@@ -78,7 +78,9 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     local randomPly
 
     if key == IN_ATTACK or key == IN_ATTACK2 then
-        while ply:GetObserverTarget() == randomPly do
+        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+
+        while ply:GetObserverTarget() == randomPly and ply:GetObserverTarget():GetObserverMode() ~= OBS_MODE_NONE do
             randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         end
     end
