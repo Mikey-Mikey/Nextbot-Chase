@@ -41,11 +41,13 @@ timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
 	GAMEMODE.players = {}
 	for _, v in ipairs(getAllPlayers()) do
-		if v:GetObserverMode() == OBS_MODE_NONE then
-			if not inTable(GAMEMODE.players, v) then
-				GAMEMODE.players[#GAMEMODE.players + 1] = v
+		if v:IsValid() then
+			if v:GetObserverMode() == OBS_MODE_NONE then
+				if not inTable(GAMEMODE.players, v) then
+					GAMEMODE.players[#GAMEMODE.players + 1] = v
+				end
+				ply_count = ply_count + 1
 			end
-			ply_count = ply_count + 1
 		end
 	end
 end)
