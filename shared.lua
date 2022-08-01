@@ -257,3 +257,11 @@ function GM:Tick()
 		end)
 	end
 end
+
+hook.Add("AU.PlayerStuck", "PlayerStuck", function(ply)
+	if ply:GetObserverMode() == OBS_MODE_NONE then
+		return true
+	else
+		return false
+	end
+end)
