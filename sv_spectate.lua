@@ -4,6 +4,7 @@ local getAllPlayers = player.GetAll
 local random = math.random
 local pairs = pairs
 local IsValid = IsValid
+local inTable = table.HasValue
 
 -- prep the network message
 util.AddNetworkString("Spectate")
@@ -78,7 +79,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if key == IN_ATTACK or key == IN_ATTACK2 then
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
 
-        while ply:GetObserverTarget() == randomPly and not ply:GetObserverTarget() in GAMEMODE.players do
+        while ply:GetObserverTarget() == randomPly and inTable(ply:GetObserverTarget()) do
             randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         end
     end
