@@ -226,7 +226,7 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 				end
 			end)
 		end
-	end -- random comment
+	end
 	if timer.Exists("SpawnProtect") then
 		victim:ChatPrint("You have been killed early, click to respawn!")
 		if not contains(dead_early,victim) then
