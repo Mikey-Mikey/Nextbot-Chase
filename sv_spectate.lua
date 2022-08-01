@@ -58,7 +58,7 @@ function GM:PostPlayerDeath(victim)
             victim:spawnAsSpectator()
         end
     else
-        victim:ChatPrint("You died early, click to respawn!")
+        victim:PrintMessage(HUD_PRINTCENTER,"You died early, click to respawn!")
         timer.Simple(6.0,function()
             for _,ply in ipairs(self.players) do
                 if not ply:Alive() and inTable(self.players, ply) then
