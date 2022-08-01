@@ -50,7 +50,9 @@ hook.Add("RoundEnd", "hud", function()
 	if CLIENT then
 		-- say in chat the players that won
 		for _, ply in ipairs(GAMEMODE.players) do
-			chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "]", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), "won this round!")
+			if ply:IsValid() then
+				chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), " won this round!")
+			end
 		end
 	end
 end)
