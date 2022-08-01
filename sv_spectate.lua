@@ -84,7 +84,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
 
-        while ply:GetObserverTarget() == randomPly and #GAMEMODE.players > 1 and #player.GetAll() > 0 or not inTable(GAMEMODE.players, ply:GetObserverTarget()) do
+        while ply:GetObserverTarget() == randomPly and #GAMEMODE.players > 1 and #player.GetAll() > 0 and not inTable(GAMEMODE.players, ply:GetObserverTarget()) do
             randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         end
     end
