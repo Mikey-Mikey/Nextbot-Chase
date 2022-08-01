@@ -2,7 +2,6 @@ GM.Name = "Nextbot Chase"
 GM.Author = "Mikey! with help from Mee, Marshall_vak, and MyUsername"
 GM.Email = "N/A"
 GM.Website = "N/A"
-
 -- Global Variables
 local round = 1
 local round_ended = round_ended or false
@@ -257,11 +256,10 @@ function GM:Tick()
 		end)
 	end
 end
-
-function AU.PlayerStuck(ply)
+hook.Add("AU.PlayerStuck","player_stuck",function(ply)
 	if ply:GetObserverMode() == OBS_MODE_NONE then
 		return true
 	else
 		return false
 	end
-end
+end)
