@@ -63,7 +63,11 @@ function GM:PostPlayerDeath(victim)
             for _,ply in ipairs(self.players) do
                 if not ply:Alive() and inTable(self.players, ply) then
                     removeValueFromTable(self.players, ply)
-                    ply:spawnAsSpectator(self.players[random(1, #self.players)])
+                    randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+                    while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
+                        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+                    end
+                    ply:spawnAsSpectator(randomPly)
                 end
             end
         end)
