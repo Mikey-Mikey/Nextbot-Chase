@@ -9,7 +9,7 @@ local floor = math.floor
 local format = string.format
 local ScrW = ScrW
 local timeLeft = timer.TimeLeft
-
+local inTable = table.HasValue
 -- Hud Config
 local FONT_SIZE = 13
 local TIMER_WIDTH = 150
@@ -41,7 +41,9 @@ timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
 	for _, v in ipairs(getAllPlayers()) do
 		if v:GetObserverMode() == OBS_MODE_NONE then
-			GAMEMODE.players[#GAMEMODE.players + 1] = v
+			if not inTable(GAMEMODE.players, v) then
+				GAMEMODE.players[#GAMEMODE.players + 1] = v
+			end
 			ply_count = ply_count + 1
 		end
 	end
