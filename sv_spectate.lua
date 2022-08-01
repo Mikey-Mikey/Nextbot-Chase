@@ -38,9 +38,7 @@ end
 function GM:PlayerInitialSpawn(ply)
     ply.spectating = false
 
-    if self:getRoundState() ~= 1 then
-        ply:spawnAsSpectator()
-    end
+    ply:spawnAsSpectator()
 end
 
 -- when a player dies, make them a spectator
