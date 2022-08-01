@@ -36,6 +36,8 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)
+    ply.spectating = false
+
     if self:getRoundState() ~= 1 then
         ply:spawnAsSpectator()
     end
@@ -62,7 +64,9 @@ end )
 -- when the round ends set everyone to spectators 
 hook.Add("RoundEnd", "spectate", function(round)
     for _,ply in pairs(getAllPlayers()) do
-        ply:killsilent()
+        if not IsValid(ply) then return end
+
+        ply:KillSilent()
         ply:spawnAsSpectator()
     end
 end )

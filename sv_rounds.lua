@@ -92,15 +92,18 @@ function GM:getRoundState()
 end
 
 -- check if the round should end
-function GM:endRoundCheck(ply)
+local function endRoundCheck(ply)
     -- if a player is not alive / leaves / spawns after the round has started then remove them from the global player table 
-    removeValueFromTable(self.players, ply)
+    removeValueFromTable(GAMEMODE.players, ply)
 
     -- if the round is active tell the server to end the round
-    if not #self.players and roundState == 1 then endRound() end
+    if #GAMEMODE.players == 0 and roundState == 1 then GAMEMODE:endRound() end
 end
 
 -- tell the round controller to check if the round should end
 hook.Add("PlayerDisconnected", "endRoundCheck", endRoundCheck)
 hook.Add("PostPlayerDeath", "endRoundCheck", endRoundCheck)
 hook.Add("PlayerInitialSpawn", "endRoundCheck", endRoundCheck)
+
+-- this gamemode is simple enough we can just run the round on server start
+GAMEMODE:preRoundStart()

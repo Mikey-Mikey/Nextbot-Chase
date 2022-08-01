@@ -10,7 +10,7 @@ local IsValid = IsValid
 local pairs = pairs
 
 -- run when the player spawns
-function GM:PlayerSpawn(ply) 
+hook.Add( "PlayerSpawn", "player", function( ply ) 
     -- check if the player is a spectator
     if ply.spectating then return end
 
@@ -24,7 +24,7 @@ function GM:PlayerSpawn(ply)
     for _,wep in pairs(playerWeapons) do
         ply:Give(wep)
     end
-end
+end )
 
 -- run when the server is a
 hook.Add("PreRoundStart", "players", function(round)
@@ -81,3 +81,12 @@ end )
 hook.Add( "PlayerSpawnSENT", "players", function(ply)
 	return false
 end )
+
+hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
+	return 0
+end )
+
+-- hook to config auto unstuck
+hook.Add("AU.CanHandlePlayer", "player_stuck",function(ply)
+    return ply:GetObserverMode() == OBS_MODE_NONE
+end)
