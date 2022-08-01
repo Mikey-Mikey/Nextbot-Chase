@@ -43,13 +43,17 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 -- when a player dies, make them a spectator
-function GM:PostPlayerDeath(ply)
-    removeValueFromTable(self.players, ply)
-    
+function GM:PostPlayerDeath(victim)
+    removeValueFromTable(self.players, victim)
+    for _,ply in pairs(getAllPlayers()) do
+        if ply:GetObserverTarget() == victim then
+            ply:spawnAsSpectator(self.players[random(1, #self.players)])
+        end
+    end
     if #self.players then
-        ply:spawnAsSpectator(self.players[random(1, #self.players)])
+        victim:spawnAsSpectator(self.players[random(1, #self.players)])
     else
-        ply:spawnAsSpectator()
+        victim:spawnAsSpectator()
     end
 end 
 
