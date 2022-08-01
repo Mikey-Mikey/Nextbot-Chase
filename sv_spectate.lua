@@ -111,7 +111,7 @@ hook.Add( "CanPlayerSuicide", "players", function( ply )
 end )
 
 hook.Add("PlayerUse", "players", function(ply,ent)
-    if timer.Exists(tostring(ply) .. "cooldown") and ply:GetObserverMode() ~= OBS_MODE_NONE and ent:IsValid() then
+    if timer.Exists(tostring(ply) .. "cooldown") and ply:GetEntityInUse() != ent and ply:GetObserverMode() ~= OBS_MODE_NONE and ent:IsValid() then
         ply:ChatPrint("You can't pick up props until " .. timer.TimeLeft(tostring(ply) .. "cooldown") .. " seconds!")
     end
     if ply:GetObserverMode() ~= OBS_MODE_NONE and ply.cooldown ~= true then
