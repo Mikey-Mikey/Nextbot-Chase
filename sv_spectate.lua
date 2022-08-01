@@ -108,7 +108,6 @@ hook.Add("PlayerCanPickupItem", "playersItem", function(ply,ent)
     if ply:GetObserverMode() == OBS_MODE_NONE then return true end
     if ply.cooldown ~= true then
         return true
-    
     else
         return false
     end
