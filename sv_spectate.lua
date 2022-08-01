@@ -59,7 +59,7 @@ function GM:PostPlayerDeath(victim)
         end
     else
         victim:ChatPrint("You died early, click to respawn!")
-        timer.Simple(4.0,function()
+        timer.Simple(6.0,function()
             for _,ply in ipairs(self.players) do
                 if not ply:Alive() and inTable(self.players, ply) then
                     removeValueFromTable(self.players, ply)
