@@ -39,6 +39,7 @@ end)
 -- update alive player count, runs once a second so its a pretty low calculation
 timer.Create("ALIVE_PLAYER_COUNT", 1, 0, function()
 	ply_count = 0
+	GAMEMODE.players = {}
 	for _, v in ipairs(getAllPlayers()) do
 		if v:GetObserverMode() == OBS_MODE_NONE then
 			if not inTable(GAMEMODE.players, v) then
@@ -57,7 +58,7 @@ hook.Add("RoundEnd", "hud", function()
 			end
 		end
 	end
-	GAMEMODE.players = {}
+	GAMEMODE.players = getAllPlayers()
 end)
 -- Actually draw the hud
 hook.Add("HUDPaint", "hud", function()
