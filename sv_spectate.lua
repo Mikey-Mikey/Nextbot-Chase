@@ -113,12 +113,12 @@ end )
 hook.Add("PlayerUse", "players", function(ply,ent)
 
     if ply:GetObserverMode() ~= OBS_MODE_NONE and ply.cooldown ~= true then
-        ply.cooldown = true
-        if ply.cooldown == false and ent:IsValid() then
+        if ply.cooldown ~= true and ent:IsValid() then
             timer.Create(tostring(ply) .. "cooldown", 5.0, 1, function()
                 ply.cooldown = false
             end)
         end
+        ply.cooldown = true
         return ent:GetClass() ~= "prop_door_rotating"
     end
     return ply:GetObserverMode() == OBS_MODE_NONE
