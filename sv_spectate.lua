@@ -115,8 +115,8 @@ end)
 
 hook.Add("PlayerUse", "players", function(ply,ent)
 
-    if ply:GetObserverMode() ~= OBS_MODE_NONE then 
-        return ent:GetClass() ~= "door_rotating"
+    if ply:GetObserverMode() ~= OBS_MODE_NONE then
+        return ent:GetClass() ~= "prop_door_rotating"
     end
     return ply:GetObserverMode() == OBS_MODE_NONE
 end)
