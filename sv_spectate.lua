@@ -42,7 +42,10 @@ function GM:PlayerInitialSpawn(ply)
     while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
     end
-    ply:spawnAsSpectator(randomPly)
+    timer.Simple(0,function()
+        ply:KillSilent()
+        ply:spawnAsSpectator(randomPly)
+    end)
 end
 
 -- when a player dies, make them a spectator
