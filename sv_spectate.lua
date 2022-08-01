@@ -81,7 +81,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
 
     local randomPly
 
-    if key == IN_ATTACK or key == IN_ATTACK2 then
+    if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
 
         while ply:GetObserverTarget() == randomPly and #GAMEMODE.players > 1 and inTable(GAMEMODE.players, ply:GetObserverTarget()) and #player.GetAll() > 0 do
@@ -91,13 +91,13 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
 
     if key == IN_ATTACK then
         ply:spawnAsSpectator(randomPly)
-    elseif key == IN_ATTACK2 then
+    end--[[elseif key == IN_ATTACK2 then
         if ply:GetObserverMode() == OBS_MODE_CHASE then
             ply:spawnAsSpectator()
         else
             ply:spawnAsSpectator(randomPly)
         end
-    end
+    end]]
 end )
 
 -- hook to config auto unstuck
