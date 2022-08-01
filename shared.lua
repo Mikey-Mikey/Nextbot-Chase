@@ -229,8 +229,10 @@ function GM:PostPlayerDeath(victim, inflictor, attacker)
 	end -- random comment
 	if timer.Exists("SpawnProtect") then
 		victim:ChatPrint("You have been killed early, click to respawn!")
-		dead_early[#dead_early + 1] = victim
-		timer.Simple(8.0,function()
+		if not contains(dead_early,victim) then
+			dead_early[#dead_early + 1] = victim
+		end
+		timer.Simple(5.0,function()
 			for k,ply in ipairs(dead_early) do
 				if not ply:Alive() then
 					table.RemoveByValue(alive_people, ply)
