@@ -55,6 +55,7 @@ hook.Add("RoundEnd", "hud", function()
 			end
 		end
 	end
+	GAMEMODE.players = {}
 end)
 -- Actually draw the hud
 hook.Add("HUDPaint", "hud", function()
