@@ -72,6 +72,7 @@ end
 
 -- before the round starts reset spectate value
 hook.Add("PreRoundStart", "spectate", function(round)
+    timer.Create("Spawn Protection", 1.0, 1, function() end)
     for _,ply in pairs(getAllPlayers()) do
         ply.spectating = false
     end
