@@ -47,7 +47,9 @@ function GM:PostPlayerDeath(victim)
     removeValueFromTable(self.players, victim)
     for _,ply in pairs(getAllPlayers()) do
         if ply:GetObserverTarget() == victim then
-            ply:spawnAsSpectator(self.players[random(1, #self.players)])
+            timer.Simple(1.0,function()
+                ply:spawnAsSpectator(self.players[random(1, #self.players)])
+            end)
         end
     end
     if #self.players then
