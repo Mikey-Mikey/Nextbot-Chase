@@ -80,7 +80,8 @@ end)
 -- round the amount of connected players up then divide by 10 (if there are 5 players on round up to 10 then devide by 10 to get 1) 
 -- after all of that add the base next bot count then spawn that many bots
 hook.Add("RoundStart", "nextbots", function(round)
-	spawnBots((math.Round(#getAllPlayers(), -1) / 10) + baseNextBotCount)
+	local min,max = game.GetWorld():GetModelBounds()
+	spawnBots((math.Round(max:Length() / 3000, -1)) + baseNextBotCount)
 end)
 
 hook.Add("RoundEnd", "nextbots", function(round)
