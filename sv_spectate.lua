@@ -94,3 +94,25 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
         end
     end
 end )
+
+-- hook to config auto unstuck
+hook.Add("AU.CanHandlePlayer", "player_stuck",function(ply)
+    return ply:GetObserverMode() == OBS_MODE_NONE
+end)
+
+hook.Add( "CanPlayerSuicide", "players", function( ply )
+    return ply:GetObserverMode() == OBS_MODE_NONE
+end )
+
+hook.Add("PlayerCanPickupItem", "playersItem", function(ply,ent)
+    if ply:GetObserverMode() ~= OBS_MODE_NONE or not ply:IsValid() then return end
+    ply.cooldown = true
+    timer.Simple(2.0, function()
+        ply.cooldown = false
+    end)
+    return ply.cooldown == false
+end)
+
+hook.Add("PlayerUse", "players", function(ply,ent)
+    return ply:GetObserverMode() == OBS_MODE_NONE
+end)

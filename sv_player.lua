@@ -57,10 +57,7 @@ hook.Add("RoundStart", "players", function(round)
     end
 end)
 
--- if players are not superadmin then they are not allowed to do the following
-hook.Add( "CanPlayerSuicide", "players", function( ply )
-    return ply:GetObserverMode() == OBS_MODE_NONE
-end )
+
 
 hook.Add( "PlayerSpawnSWEP", "players", function(ply, desiredState)
     return false
@@ -85,8 +82,3 @@ end )
 hook.Add( "GetFallDamage", "RealisticDamage", function( ply, speed )
 	return 0
 end )
-
--- hook to config auto unstuck
-hook.Add("AU.CanHandlePlayer", "player_stuck",function(ply)
-    return ply:GetObserverMode() == OBS_MODE_NONE
-end)
