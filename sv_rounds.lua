@@ -68,6 +68,12 @@ end
 function GM:endRound()
     -- set the internal round state to 2
     roundState = 2
+    for _, ply in ipairs(GAMEMODE.players) do
+        if CLIENT and ply == LocalPlayer() then
+            -- say in chat the players that won
+            chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "]", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), "won this round!")
+        end
+    end
     MsgC(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] Ending Round " .. round .. "\n")
 
     -- let the client know that the round is ending
