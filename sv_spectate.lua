@@ -38,7 +38,7 @@ end
 
 function GM:PlayerInitialSpawn(ply)
     ply.spectating = true
-    randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+    local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
     while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
         randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
     end
