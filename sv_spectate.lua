@@ -64,7 +64,7 @@ function GM:PostPlayerDeath(victim)
                 end)
             end
         end
-        if #self.players then
+        if #self.players > 0 then
             victim:spawnAsSpectator(self.players[random(1, #self.players)])
         else
             victim:spawnAsSpectator()
