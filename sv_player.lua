@@ -8,7 +8,7 @@ local simpleTimer = timer.Simple
 local getAllPlayers = player.GetAll
 local IsValid = IsValid
 local pairs = pairs
-
+local ipairs = ipairs
 -- run when the player spawns
 hook.Add( "PlayerSpawn", "player", function( ply ) 
     -- check if the player is a spectator
@@ -32,27 +32,29 @@ hook.Add("PreRoundStart", "players", function(round)
     GAMEMODE.players = {}
 
     -- for every player on the server do the following 
-    for i,ply in pairs(getAllPlayers()) do
-        if i == 1 then
-            ply:UnSpectate()
-            ply:Spawn()
-            ply:SetTeam(1)
-            ply:SetNoCollideWithTeammates(true)
-            ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,16)) --for some reason, this is needed to prevent the players from spawning in the same spot
-
-            -- add the player to the global alive players table
-            GAMEMODE.players[#GAMEMODE.players + 1] = ply
-        else
-            timer.Simple(i * 0.15, function()
+    for i,ply in ipairs(getAllPlayers()) do
+        if ply:IsValid() then
+            if i == 1 then
                 ply:UnSpectate()
                 ply:Spawn()
                 ply:SetTeam(1)
                 ply:SetNoCollideWithTeammates(true)
                 ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,16)) --for some reason, this is needed to prevent the players from spawning in the same spot
-    
+
                 -- add the player to the global alive players table
                 GAMEMODE.players[#GAMEMODE.players + 1] = ply
-            end)
+            else
+                timer.Simple(i * 0.15, function()
+                    ply:UnSpectate()
+                    ply:Spawn()
+                    ply:SetTeam(1)
+                    ply:SetNoCollideWithTeammates(true)
+                    ply:SetPos(ply:GetPos() + ply:GetAimVector() * math.random(0,16)) --for some reason, this is needed to prevent the players from spawning in the same spot
+        
+                    -- add the player to the global alive players table
+                    GAMEMODE.players[#GAMEMODE.players + 1] = ply
+                end)
+            end
         end
     end
 end)
