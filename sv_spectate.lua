@@ -40,9 +40,6 @@ function GM:PlayerInitialSpawn(ply)
     if #GAMEMODE.players > 1 then
         ply.spectating = true
         local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-        while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
-            randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-        end
         timer.Simple(0,function()
             ply:KillSilent()
             ply:spawnAsSpectator(randomPly)
@@ -76,9 +73,6 @@ function GM:PostPlayerDeath(victim)
                 if not ply:Alive() and inTable(self.players, ply) then
                     removeValueFromTable(self.players, ply)
                     randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-                    while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
-                        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-                    end
                     ply:spawnAsSpectator(randomPly)
                 end
             end
@@ -109,12 +103,21 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
     if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
         if #getAllPlayers() > 1 then
-            local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-            if randomPly:IsValid() then
-                while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
-                    randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+            local spect = targetPly:GetObserverTarget()
+            local targetPly
+            for k,target in ipairs(GAMEMODE.players) -- spectate the next player in the list
+                if target == spect then
+                    if k + 1 < #GAMEMODE.players then
+                        targetPly = GAMEMODE.players[k + 1]
+                    else
+                        targetPly = GAMEMODE.players[1]
+                    end
                 end
-                ply:spawnAsSpectator(randomPly)
+            end
+            if targetPly:IsValid() then
+                ply:spawnAsSpectator(targetPly)
+            else
+                error("Invalid target spectate player")
             end
         end
     end
