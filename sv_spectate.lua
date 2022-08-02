@@ -102,25 +102,13 @@ end )
 -- let the user change spectate modes and players
 hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
-
-    local randomPly
-
     if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
-        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+        local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         while (ply:GetObserverTarget() == randomPly or randomPly:GetObserverMode() ~= OBS_MODE_NONE or not inTable(GAMEMODE.players, randomPly)) and #GAMEMODE.players > 1 do
             randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         end
-    end
-
-    if key == IN_ATTACK then
         ply:spawnAsSpectator(randomPly)
-    end--[[elseif key == IN_ATTACK2 then
-        if ply:GetObserverMode() == OBS_MODE_CHASE then
-            ply:spawnAsSpectator()
-        else
-            ply:spawnAsSpectator(randomPly)
-        end
-    end]]
+    end
 end )
 
 -- hook to config auto unstuck
