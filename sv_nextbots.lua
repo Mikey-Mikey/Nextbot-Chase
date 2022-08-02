@@ -82,7 +82,7 @@ end)
 -- after all of that add the base next bot count then spawn that many bots
 hook.Add("RoundStart", "nextbots", function(round)
 	local min,max = game.GetWorld():GetModelBounds()
-	spawnBots((math.Round(max:Length()) / 4000) + baseNextBotCount)
+	spawnBots((math.Round(max:Length()) / 3000) + baseNextBotCount)
 end)
 
 hook.Add("RoundEnd", "nextbots", function(round)
