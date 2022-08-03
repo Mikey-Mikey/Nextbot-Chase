@@ -54,42 +54,24 @@ end
 -- when a player dies, make them a spectator
 local dead_early = {}
 function GM:PostPlayerDeath(victim)
-    if not timer.Exists("Spawn Protection") then
-        removeValueFromTable(self.players, victim)
-        victim.spectating = true
-        for _,ply in pairs(getAllPlayers()) do
-            if ply:GetObserverTarget() == victim then
-                timer.Simple(1.0,function()
-                    ply:spawnAsSpectator(self.players[random(1, #self.players)])
-                end)
-            end
-        end
-        if #self.players > 0 then
-            victim:spawnAsSpectator(self.players[random(1, #self.players)])
-        else
-            victim:spawnAsSpectator()
-        end
-    else
-        if #dead_early < 1 then
-            timer.Simple(6.0,function()
-                for _,ply in ipairs(dead_early) do
-                    if not ply:Alive() then
-                        removeValueFromTable(self.players, ply)
-                        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-                        ply:spawnAsSpectator(randomPly)
-                    end
-                end
-                dead_early = {}
+    removeValueFromTable(self.players, victim)
+    victim.spectating = true
+    for _,ply in pairs(getAllPlayers()) do
+        if ply:GetObserverTarget() == victim then
+            timer.Simple(1.0,function()
+                ply:spawnAsSpectator(self.players[random(1, #self.players)])
             end)
         end
-        dead_early[#dead_early + 1] = victim
-        victim:PrintMessage(HUD_PRINTCENTER,"You died early, click to respawn!")
+    end
+    if #self.players > 0 then
+        victim:spawnAsSpectator(self.players[random(1, #self.players)])
+    else
+        victim:spawnAsSpectator()
     end
 end 
 
 -- before the round starts reset spectate value
 hook.Add("PreRoundStart", "spectate", function(round)
-    timer.Create("Spawn Protection", 1.0, 1, function() end)
     for _,ply in pairs(getAllPlayers()) do
         ply.spectating = false
     end
