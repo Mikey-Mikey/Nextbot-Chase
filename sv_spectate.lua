@@ -116,7 +116,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
             local targetPly
             for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
                 if target == spect then
-                    targetPly = GAMEMODE.players[((k + dir) % #GAMEMODE.players) + 1]
+                    targetPly = GAMEMODE.players[((k - 1 + dir) % #GAMEMODE.players) + 1]
                 end
             end
             if targetPly:IsValid() then
