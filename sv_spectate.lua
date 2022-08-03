@@ -41,7 +41,6 @@ function GM:PlayerInitialSpawn(ply)
         ply.spectating = true
         local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         timer.Simple(0,function()
-            ply:KillSilent()
             ply:spawnAsSpectator(randomPly)
         end)
 
@@ -51,6 +50,7 @@ function GM:PlayerInitialSpawn(ply)
 end
 
 -- when a player dies, make them a spectator
+local dead_early = {}
 function GM:PostPlayerDeath(victim)
     if not timer.Exists("Spawn Protection") then
         removeValueFromTable(self.players, victim)
@@ -68,16 +68,20 @@ function GM:PostPlayerDeath(victim)
             victim:spawnAsSpectator()
         end
     else
-        victim:PrintMessage(HUD_PRINTCENTER,"You died early, click to respawn!")
-        timer.Simple(6.0,function()
-            for _,ply in ipairs(self.players) do
-                if not ply:Alive() and inTable(self.players, ply) then
-                    removeValueFromTable(self.players, ply)
-                    randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-                    ply:spawnAsSpectator(randomPly)
+        if #dead_early < 1 then
+            timer.Simple(6.0,function()
+                for _,ply in ipairs(dead_early) do
+                    if not ply:Alive() then
+                        removeValueFromTable(self.players, ply)
+                        randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+                        ply:spawnAsSpectator(randomPly)
+                    end
                 end
-            end
-        end)
+                dead_early = {}
+            end)
+        end
+        dead_early[#dead_early + 1] = victim
+        victim:PrintMessage(HUD_PRINTCENTER,"You died early, click to respawn!")
     end
 end 
 
@@ -106,7 +110,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
         if #getAllPlayers() > 1 then
             local spect = targetPly:GetObserverTarget()
             local targetPly
-            for k,target in ipairs(GAMEMODE.players) -- spectate the next player in the list
+            for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
                 if target == spect then
                     if k + 1 < #GAMEMODE.players then
                         targetPly = GAMEMODE.players[k + 1]
