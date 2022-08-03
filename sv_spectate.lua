@@ -125,6 +125,25 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
                 error("Invalid target spectate player")
             end
         end
+    elseif key == IN_ATTACK2 then
+        if #getAllPlayers() > 1 then
+            local spect = ply:GetObserverTarget()
+            local targetPly
+            for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
+                if target == spect then
+                    if k - 1 > 0 then
+                        targetPly = GAMEMODE.players[k - 1]
+                    else
+                        targetPly = GAMEMODE.players[#GAMEMODE.players]
+                    end
+                end
+            end
+            if targetPly:IsValid() then
+                ply:spawnAsSpectator(targetPly)
+            else
+                error("Invalid target spectate player")
+            end
+        end
     end
 end )
 
