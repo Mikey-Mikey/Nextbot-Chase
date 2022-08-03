@@ -110,6 +110,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
     if key == IN_ATTACK or key == IN_ATTACK2 then
         local dir = bool2int(key == IN_ATTACK) - bool2int(key == IN_ATTACK2)
+        print(dir)
         if #getAllPlayers() > 1 then
             local spect = ply:GetObserverTarget()
             local targetPly
