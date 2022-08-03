@@ -54,6 +54,7 @@ end
 function GM:PostPlayerDeath(victim)
     if not timer.Exists("Spawn Protection") then
         removeValueFromTable(self.players, victim)
+        victim.spectating = true
         for _,ply in pairs(getAllPlayers()) do
             if ply:GetObserverTarget() == victim then
                 timer.Simple(1.0,function()
