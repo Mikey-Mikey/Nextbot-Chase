@@ -25,7 +25,7 @@ function PlayerMeta:spawnAsSpectator(target)
         self:Spectate(OBS_MODE_ROAMING)
     end
 end
-local bool2int(bool)
+local function bool2int(bool)
     return bool and 1 or 0;
 end
 
