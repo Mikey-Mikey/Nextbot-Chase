@@ -5,7 +5,6 @@ local random = math.random
 local pairs = pairs
 local IsValid = IsValid
 local inTable = table.HasValue
-
 -- prep the network message
 util.AddNetworkString("Spectate")
 
@@ -25,6 +24,9 @@ function PlayerMeta:spawnAsSpectator(target)
     else
         self:Spectate(OBS_MODE_ROAMING)
     end
+end
+local bool2int(bool)
+    return bool ? 1 : 0;
 end
 
 -- when a player spawns as a spectator make sure their client knows they are a spectator
@@ -106,36 +108,14 @@ end )
 -- let the user change spectate modes and players
 hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
-    if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
+    if key == IN_ATTACK or key == IN_ATTACK2 then
+        local dir = bool2int(key == IN_ATTACK) - bool2int(key == IN_ATTACK2)
         if #getAllPlayers() > 1 then
             local spect = ply:GetObserverTarget()
             local targetPly
             for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
                 if target == spect then
-                    if k + 1 <= #GAMEMODE.players then
-                        targetPly = GAMEMODE.players[k + 1]
-                    else
-                        targetPly = GAMEMODE.players[1]
-                    end
-                end
-            end
-            if targetPly:IsValid() then
-                ply:spawnAsSpectator(targetPly)
-            else
-                error("Invalid target spectate player")
-            end
-        end
-    elseif key == IN_ATTACK2 then
-        if #getAllPlayers() > 1 then
-            local spect = ply:GetObserverTarget()
-            local targetPly
-            for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
-                if target == spect then
-                    if k - 1 > 0 then
-                        targetPly = GAMEMODE.players[k - 1]
-                    else
-                        targetPly = GAMEMODE.players[#GAMEMODE.players]
-                    end
+                    targetPly = GAMEMODE.players[((k + dir) % #GAMEMODE.players) + 1]
                 end
             end
             if targetPly:IsValid() then
