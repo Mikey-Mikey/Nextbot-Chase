@@ -108,7 +108,7 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
     if not ply.spectating then return end
     if key == IN_ATTACK --[[ or key == IN_ATTACK2]] then
         if #getAllPlayers() > 1 then
-            local spect = targetPly:GetObserverTarget()
+            local spect = ply:GetObserverTarget()
             local targetPly
             for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
                 if target == spect then
