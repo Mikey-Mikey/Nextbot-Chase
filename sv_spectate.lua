@@ -26,7 +26,7 @@ function PlayerMeta:spawnAsSpectator(target)
     end
 end
 local bool2int(bool)
-    return bool ? 1 : 0;
+    return bool and 1 or 0;
 end
 
 -- when a player spawns as a spectator make sure their client knows they are a spectator
