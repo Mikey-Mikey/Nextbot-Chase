@@ -59,7 +59,10 @@ function GM:PostPlayerDeath(victim)
     for _,ply in pairs(getAllPlayers()) do
         if ply:GetObserverTarget() == victim then
             timer.Simple(1.0,function()
-                ply:spawnAsSpectator(self.players[random(1, #self.players)])
+                local randomPly = self.players[random(1, #self.players)]
+                if randomPly:IsValid() then
+                    ply:spawnAsSpectator()
+                end
             end)
         end
     end
@@ -96,8 +99,10 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
             local spect = ply:GetObserverTarget()
             local targetPly
             for k,target in ipairs(GAMEMODE.players) do -- spectate the next player in the list
-                if target == spect then
-                    targetPly = GAMEMODE.players[((k - 1 + dir) % #GAMEMODE.players) + 1]
+                if target:isValid() then
+                    if target == spect then
+                        targetPly = GAMEMODE.players[((k - 1 + dir) % #GAMEMODE.players) + 1]
+                    end
                 end
             end
             if targetPly:IsValid() then
