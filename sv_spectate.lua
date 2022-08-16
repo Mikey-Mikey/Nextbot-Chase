@@ -43,9 +43,12 @@ function GM:PlayerInitialSpawn(ply)
         ply.spectating = true
         local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         timer.Simple(0,function()
-            ply:spawnAsSpectator(randomPly)
+            if randomPly then
+                if randomPly:IsValid() then
+                    ply:spawnAsSpectator(randomPly)
+                end
+            end
         end)
-
     else
         ply.spectating = false
     end
@@ -60,8 +63,10 @@ function GM:PostPlayerDeath(victim)
         if ply:GetObserverTarget() == victim then
             timer.Simple(1.0,function()
                 local randomPly = self.players[random(1, #self.players)]
-                if randomPly:IsValid() then
-                    ply:spawnAsSpectator()
+                if randomPly then
+                    if randomPly:IsValid() then
+                        ply:spawnAsSpectator()
+                    end
                 end
             end)
         end
