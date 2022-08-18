@@ -110,10 +110,12 @@ hook.Add("KeyPress", "Spectate", function(ply, key)
                     end
                 end
             end
-            if targetPly:IsValid() then
-                ply:spawnAsSpectator(targetPly)
-            else
-                error("Invalid target spectate player")
+            if targetPly then
+                if targetPly:IsValid() then
+                    ply:spawnAsSpectator(targetPly)
+                else
+                    error("Invalid target spectate player")
+                end
             end
         end
     end
