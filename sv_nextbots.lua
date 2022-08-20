@@ -60,10 +60,9 @@ local function spawnBots(amount)
 
 				if ply:GetPos():Distance(pos) > 200 then
 					pos_found = true
-				else
-					samples = samples + 1
 				end
 			end
+			samples = samples + 1
 		end
 
 		local nextbot = ents.Create(nextbots[random(#nextbots)])
