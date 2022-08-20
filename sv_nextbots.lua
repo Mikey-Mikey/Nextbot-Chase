@@ -53,13 +53,15 @@ local function spawnBots(amount)
 		local pos_found = false
 		local pos
 
-
-		while not pos_found do
+		local samples = 0
+		while not pos_found and samples < 100 do
 			for _, ply in ipairs(getAllPlayers()) do
 				pos = areas[random(#areas)]:GetRandomPoint()
 
 				if ply:GetPos():Distance(pos) > 200 then
 					pos_found = true
+				else
+					samples = samples + 1
 				end
 			end
 		end
