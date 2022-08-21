@@ -57,12 +57,12 @@ end
 -- when a player dies, make them a spectator
 local dead_early = {}
 function GM:PostPlayerDeath(victim)
-    removeValueFromTable(self.players, victim)
+    removeValueFromTable(GAMEMODE.players, victim)
     victim.spectating = true
     for _,ply in pairs(getAllPlayers()) do
         if ply:GetObserverTarget() == victim then
             timer.Simple(1.0,function()
-                local randomPly = self.players[random(1, #self.players)]
+                local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
                 if randomPly then
                     if randomPly:IsValid() then
                         ply:spawnAsSpectator()
@@ -71,8 +71,8 @@ function GM:PostPlayerDeath(victim)
             end)
         end
     end
-    if #self.players > 0 then
-        victim:spawnAsSpectator(self.players[random(1, #self.players)])
+    if #GAMEMODE.players > 0 then
+        victim:spawnAsSpectator(GAMEMODE.players[random(1, #GAMEMODE.players)])
     else
         victim:spawnAsSpectator()
     end
