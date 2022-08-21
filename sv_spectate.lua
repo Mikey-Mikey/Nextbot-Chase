@@ -61,14 +61,18 @@ function GM:PostPlayerDeath(victim)
     victim.spectating = true
     for _,ply in pairs(getAllPlayers()) do
         if ply:GetObserverTarget() == victim then
-            timer.Simple(1.0,function()
-                local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
-                if randomPly then
-                    if randomPly:IsValid() then
-                        ply:spawnAsSpectator(randomPly)
+            if #GAMEMODE.players > 0 then
+                timer.Simple(1.0,function()
+                    if #GAMEMODE.players > 0 then
+                        local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
+                        if randomPly then
+                            if randomPly:IsValid() then
+                                ply:spawnAsSpectator(randomPly)
+                            end
+                        end
                     end
-                end
-            end)
+                end)
+            end
         end
     end
     if #GAMEMODE.players > 0 then
