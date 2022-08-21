@@ -51,7 +51,7 @@ local getAllPlayers = player.GetAll
 local function spawnBots(amount)
 	for i = 1,amount do
 		local pos_found = false
-		local pos
+		local pos = areas[random(#areas)]:GetRandomPoint()
 
 		local samples = 0
 		while not pos_found and samples < 100 do
