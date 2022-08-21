@@ -97,7 +97,7 @@ local function endRoundCheck(ply)
     removeValueFromTable(GAMEMODE.players, ply)
 
     -- if the round is active tell the server to end the round
-    if #GAMEMODE.players == 0 and roundState == 1 then GAMEMODE:endRound() end
+    if #GAMEMODE.players <= 0 and roundState == 1 then GAMEMODE:endRound() end
 end
 
 -- tell the round controller to check if the round should end
