@@ -65,7 +65,7 @@ function GM:PostPlayerDeath(victim)
                 local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
                 if randomPly then
                     if randomPly:IsValid() then
-                        ply:spawnAsSpectator()
+                        ply:spawnAsSpectator(randomPly)
                     end
                 end
             end)
@@ -73,8 +73,6 @@ function GM:PostPlayerDeath(victim)
     end
     if #GAMEMODE.players > 0 then
         victim:spawnAsSpectator(GAMEMODE.players[random(1, #GAMEMODE.players)])
-    else
-        victim:spawnAsSpectator()
     end
 end 
 
