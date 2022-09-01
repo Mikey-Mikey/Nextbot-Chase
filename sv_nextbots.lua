@@ -47,7 +47,6 @@ local pairs = pairs
 local ipairs = ipairs
 local IsValid = IsValid
 local getAllPlayers = player.GetAll
-
 -- spawn bots at a random location
 local function spawnBots(amount)
 	for i = 1,amount do
@@ -65,8 +64,11 @@ local function spawnBots(amount)
 			end
 			samples = samples + 1
 		end
-
-		local nextbot = ents.Create(nextbots[random(#nextbots)])
+		local nextbot_class = nextbots[random(#nextbots)]
+		if random(0,100) <= 0 then
+			nextbot_class = "npc_ANGRY_MUNCI"
+		end
+		local nextbot = ents.Create(nextbot_class)
 
 		nextbot:SetPos(pos)
 		nextbot:Spawn()
