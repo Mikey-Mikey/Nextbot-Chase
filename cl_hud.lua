@@ -29,7 +29,7 @@ surface.CreateFont( "SmallText", {
 surface.CreateFont( "BigText", {
 	font = "CloseCaption_Bold",
 	extended = false,
-	size = 24,
+	size = floor(FONT_SIZE * 2),
 	antialias = true
 })
 
