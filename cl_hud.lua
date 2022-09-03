@@ -11,7 +11,7 @@ local ScrW = ScrW
 local timeLeft = timer.TimeLeft
 local inTable = table.HasValue
 -- Hud Config
-local FONT_SIZE = floor(math.min(ScrW(), ScrH()) / 50)
+local FONT_SIZE = floor(math.min(ScrW(), ScrH()) / 70)
 local TIMER_WIDTH = 0.07
 local TIMER_HEIGHT = 0.06
 local TIMER_RADIUS = 8
