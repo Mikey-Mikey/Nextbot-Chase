@@ -38,7 +38,7 @@ function GM:PlayerSpawn(ply)
 end
 
 function GM:PlayerInitialSpawn(ply)
-    if #GAMEMODE.players > 1 then
+    if #getAllPlayers() > 1 then
         ply.spectating = true
         local randomPly = GAMEMODE.players[random(1, #GAMEMODE.players)]
         timer.Simple(0,function()
