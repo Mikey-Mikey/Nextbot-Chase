@@ -29,20 +29,6 @@ local nextbots = {
 	"npc_henrystickmin",
 	"npc_bob"
 }
-local nextbots = {}
-local npcs = list.Get("NPC")
-for k,v in pairs(npcs) do
-	if string.find(k, "tf2") then
-		continue
-	end
-	local e = ents.Create(k)
-	if e:IsNextBot() then
-		nextbots[#nextbots + 1] = k
-	end
-	if IsValid(e) then
-		e:Remove()
-	end
-end
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- need to find a way to use list.Get("NPC")
 -- StarFrost 7/30/2022, 11:53:17 AM Easily? I don't know. Your best bet is probably list.Get("NPC") since you'll be able to get every npc/nextbot. Only way I know of recognizing whatever class name is a nextbot is actually spawning down the entity and testing :IsNextBot() but that sounds very costly
@@ -63,6 +49,20 @@ local IsValid = IsValid
 local getAllPlayers = player.GetAll
 -- spawn bots at a random location
 local function spawnBots(amount)
+	local nextbots = {}
+	local npcs = list.Get("NPC")
+	for k,v in pairs(npcs) do
+		if string.find(k, "tf2") then
+			continue
+		end
+		local e = ents.Create(k)
+		if e:IsNextBot() then
+			nextbots[#nextbots + 1] = k
+		end
+		if IsValid(e) then
+			e:Remove()
+		end
+	end
 	for i = 1,amount do
 		local pos_found = false
 		local pos = areas[random(#areas)]:GetRandomPoint()
