@@ -62,15 +62,11 @@ hook.Add("RoundEnd", "hud", function()
 	if CLIENT then
 		-- say in chat the players that won
 		if #GAMEMODE.players > 0 then
-			timer.Simple(0.01,function()
-				if #GAMEMODE.players > 0 then
-					for _, ply in ipairs(GAMEMODE.players) do
-						if ply:IsValid() and ply:Alive() and ply:GetObserverMode() == OBS_MODE_NONE then
-							chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), " won this round!")
-						end
-					end
+			for _, ply in ipairs(GAMEMODE.players) do
+				if ply:IsValid() and ply:Alive() and ply:GetObserverMode() == OBS_MODE_NONE then
+					chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), " won this round!")
 				end
-			end)
+			end
 		else
 			chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(255, 255, 255), "Everybody lost this round!")
 		end
