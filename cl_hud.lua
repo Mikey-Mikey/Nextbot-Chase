@@ -12,7 +12,7 @@ local timeLeft = timer.TimeLeft
 local inTable = table.HasValue
 -- Hud Config
 local FONT_SIZE = 13
-local TIMER_WIDTH = 150
+local TIMER_WIDTH = 0.05
 local TIMER_HEIGHT = 50
 local TIMER_RADIUS = 8
 local TIMER_BACKGROUND_COLOR = Color(0, 0, 0, 200)
@@ -79,7 +79,7 @@ hook.Add("RoundEnd", "hud", function()
 end)
 -- Actually draw the hud
 hook.Add("HUDPaint", "hud", function()
-	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - TIMER_WIDTH / 2, -TIMER_RADIUS, TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
+	draw_RoundedBox(TIMER_RADIUS, ScrW() / 2 - ScrW() * TIMER_WIDTH / 2, -TIMER_RADIUS, ScrW() * TIMER_WIDTH, TIMER_HEIGHT, TIMER_BACKGROUND_COLOR)
 
 	-- calculate time left
 	local timer = timeLeft("chase_time") or 0
