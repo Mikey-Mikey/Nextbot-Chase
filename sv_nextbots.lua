@@ -55,6 +55,9 @@ local function spawnBots(amount)
 		if string.find(k, "tf2") then
 			continue
 		end
+		if string.find(k, "MUNCI") then
+			continue
+		end
 		local e = ents.Create(k)
 		if e:IsNextBot() then
 			nextbots[#nextbots + 1] = k
