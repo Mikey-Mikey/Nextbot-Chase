@@ -13,7 +13,7 @@ local inTable = table.HasValue
 -- Hud Config
 local FONT_SIZE = 13
 local TIMER_WIDTH = 0.07
-local TIMER_HEIGHT = 0.1
+local TIMER_HEIGHT = 0.07
 local TIMER_RADIUS = 8
 local TIMER_BACKGROUND_COLOR = Color(0, 0, 0, 200)
 local TEXT_COLOR = color_white
