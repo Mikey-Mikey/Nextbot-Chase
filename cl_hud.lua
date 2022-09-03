@@ -69,8 +69,6 @@ hook.Add("RoundEnd", "hud", function()
 							chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), " won this round!")
 						end
 					end
-				else
-					chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), "Everybody lost this round!")
 				end
 			end)
 		else
