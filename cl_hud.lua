@@ -88,5 +88,5 @@ hook.Add("HUDPaint", "hud", function()
 	local formatted_seconds = format("%02d", seconds)		-- formats the string so it always has 2 digits, such as 09 instead of 9
 
 	draw_DrawText(minutes .. ":" .. formatted_seconds, "BigText", ScrW() / 2, 3, TEXT_COLOR, TEXT_ALIGN_CENTER)
-	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, FONT_SIZE + 14, TEXT_COLOR, TEXT_ALIGN_CENTER)
+	draw_DrawText("Players Left: " .. ply_count, "SmallText", ScrW() / 2, FONT_SIZE + 17, TEXT_COLOR, TEXT_ALIGN_CENTER)
 end)
