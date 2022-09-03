@@ -12,7 +12,7 @@ local ipairs = ipairs
 -- run when the player spawns
 hook.Add( "PlayerSpawn", "player", function( ply ) 
     -- check if the player is a spectator
-    if ply.spectating then return end
+    if ply.spectating == true then return end
 
     -- set the player's model
     ply:SetModel( "models/player/odessa.mdl" )

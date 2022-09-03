@@ -30,9 +30,8 @@ local function bool2int(bool)
 end
 
 -- when a player spawns as a spectator make sure their client knows they are a spectator
-function GM:PlayerSpawn(ply) 
+function GM:PlayerSpawn(ply)
     if not ply.spectating then return end
-
     net.Start("Spectate")
     net.WriteBool(true)
     net.Send(ply)
