@@ -72,7 +72,7 @@ hook.Add("RoundEnd", "hud", function()
 				end
 			end)
 		else
-			chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(236, 150, 19), ply:Nick(), Color(255, 255, 255), "Everybody lost this round!")
+			chat.AddText(Color(255, 255, 255), "[", Color(30, 255, 0), "Nextbot Chase", Color(255, 255, 255), "] ", Color(255, 255, 255), "Everybody lost this round!")
 		end
 	end
 	GAMEMODE.players = getAllPlayers()
