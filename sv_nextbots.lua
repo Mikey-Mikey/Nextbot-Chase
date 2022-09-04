@@ -24,10 +24,7 @@ local function spawnBots(amount)
 	local nextbots = {}
 	local npcs = list.Get("NPC")
 	for k,v in pairs(npcs) do
-		if string.find(k, "tf2_ghost") then
-			continue
-		end
-		if string.find(k, "MUNCI") then
+		if string.find(k, "tf2_ghost") or string.find(k, "MUNCI") then
 			continue
 		end
 		local e = ents.Create(k)
