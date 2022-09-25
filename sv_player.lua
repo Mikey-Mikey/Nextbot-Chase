@@ -16,7 +16,7 @@ hook.Add( "PlayerSpawn", "player", function( ply )
 
     -- set the player's model
     ply:SetModel( "models/player/male_07.mdl" )
-    ply:SetPlayerColor(Color(240,187,12))
+    ply:SetPlayerColor(Vector(1,0.733,0))
 
     -- remove the player's velocity (kept across spawns for some reason)
     ply:SetVelocity(-ply:GetVelocity())
