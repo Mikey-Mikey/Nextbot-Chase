@@ -15,7 +15,7 @@ hook.Add( "PlayerSpawn", "player", function( ply )
     if ply.spectating == true then return end
 
     -- set the player's model
-    ply:SetModel( "models/player/odessa.mdl" )
+    ply:SetModel("models/player/Group01/male_07.mdl")
     ply:SetPlayerColor(Vector(1,0.733,0))
 
     -- remove the player's velocity (kept across spawns for some reason)
