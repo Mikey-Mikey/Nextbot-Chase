@@ -20,6 +20,7 @@ local ipairs = ipairs
 local IsValid = IsValid
 local getAllPlayers = player.GetAll
 -- spawn bots at a random location
+-- a
 local function spawnBots(amount)
 	local nextbots = {}
 	local npcs = list.Get("NPC")
